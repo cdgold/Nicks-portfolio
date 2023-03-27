@@ -2,6 +2,8 @@ const resumeEntrysRouter = require("express").Router()
 const ResumeEntry = require("../models/resumeEntry")
 const jwt = require("jsonwebtoken")
 
+const acceptableCategories = ["education", "skill", "job", "pdf"]
+
 resumeEntrysRouter.get("/", async (request, response, next) => {
     const resumeEntrys = await ResumeEntry
       .find({})
@@ -10,15 +12,23 @@ resumeEntrysRouter.get("/", async (request, response, next) => {
   })
 
 resumeEntrysRouter.post("/", async (request, response, next) => {
-  if(!("title" in request.body) || !("category" in request.body)){
+  if(!("title" in request.body) || !("category" in request.body) || !acceptableCategories.includes(request.body.category)){
     return response.status(400).end()
   }
 
   const body = request.body
   try {
     const resumeEntry = new ResumeEntry({ ...body })
+    let oldPdf = null
+    if(body.category === "pdf") {
+      oldPdf = await ResumeEntry.findOne({ category: "pdf" })
+      console.log("Old pdf is: ", oldPdf)
+    }
     const savedResumeEntry = await resumeEntry.save()
-    
+    if (oldPdf != null) {
+      await oldPdf.deleteOne()
+    }
+
     response.json(savedResumeEntry)
   }
   catch (error) {

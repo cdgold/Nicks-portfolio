@@ -159,65 +159,63 @@ const exampleResumeEntrys = [
     title: "can speak espanol",
     subtitle: "4th level by Congressional Standards",
     category: "skill"
+  },
+  {
+    title: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=sharing",
+    category: "pdf"
   }
 ]
 
-const Resume = ( resumeEntrys ) => {
+const Resume = ({ resumeEntrys }) => {
   //const [resumeEntrys, setResumeEntrys] = useState([])
-  resumeEntrys = exampleResumeEntrys
+  //resumeEntrys = exampleResumeEntrys
   //useEffect(() => {
   //  setResumeEntrys(exampleResumeEntrys)
   //}, [])
   /*
-  useEffect(() => {
-    resumeEntrysService.getAll()
-      .then(entrys => {
-        console.log("Fetched entrys: ", entrys)
-        setResumeEntrys(entrys)
-      })
-      .catch(error => {
-        console.error("Error in resume component when fetching: ", error)
-      })
-  }, [])
   */
-
-  return(
-    <div>
-      <StyledGrid>
-        <StyledEducationBox>
-          <h3> education </h3>
-          <ul>
-            {resumeEntrys.map(entry => {
+  if( resumeEntrys !== [] ) {
+    return(
+      <div>
+        <StyledGrid>
+          <StyledEducationBox>
+            <h3> education </h3>
+            <ul>
+              {resumeEntrys.map(entry => {
               //console.log("in components/resume, entry is: ", entry)
               //console.log("category of : ", entry.category, " !== education")
-              if (entry.category === "education") {
-                return(<li key={entry.title}> {entry.title} </li>)
-              }
-            })}
-          </ul>
-        </StyledEducationBox>
-        <StyledSkillsBox>
-          <h3> skills </h3>
-          {resumeEntrys.map(entry => {
-            if (entry.category === "skill"){
-              return(<li key={entry.title}> {entry.title} </li>)
-            }
-          })}
-        </StyledSkillsBox>
-        <StyledJobsBox>
-          <h3> work experience </h3>
-          <ol>
+                if (entry.category === "education") {
+                  return(<li key={entry.title}> {entry.title} </li>)
+                }
+              })}
+            </ul>
+          </StyledEducationBox>
+          <StyledSkillsBox>
+            <h3> skills </h3>
             {resumeEntrys.map(entry => {
-              if (entry.category === "job"){
+              if (entry.category === "skill"){
                 return(<li key={entry.title}> {entry.title} </li>)
               }
             })}
-          </ol>
-        </StyledJobsBox>
-      </StyledGrid>
-      PDF of resume is available <a href="https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=sharing"> here </a> <br></br>
-    </div>
-  )
+          </StyledSkillsBox>
+          <StyledJobsBox>
+            <h3> work experience </h3>
+            <ol>
+              {resumeEntrys.map(entry => {
+                if (entry.category === "job"){
+                  return(<li key={entry.title}> {entry.title} </li>)
+                }
+              })}
+            </ol>
+          </StyledJobsBox>
+        </StyledGrid>
+      PDF of resume is available <a href={resumeEntrys.find(entry => entry.category === "pdf").title}> here </a> <br></br>
+      </div>
+    )
+  }
+  else {
+    return ( <div> Loading... </div>)
+  }
 }
 
 export default Resume

@@ -1,23 +1,34 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Header from "./components/header.js"
 import Home from "./components/home.js"
 import Resume from "./components/resume.js"
 import Projects from "./components/projects.js"
+import EditingPage from "./components/editingPage.js"
+import resumeEntrysService from "./services/resumeEntrys"
 import {
-  BrowserRouter as Router,
-  Routes, Route, Link, useMatch, useNavigate
+  Routes, Route
 } from "react-router-dom"
-import styled from "styled-components"
 
 const App = () => {
   //document.body.style.backgroundColor = "#FFF8E7" // equivalent to theme beige
 
+  const [resumeEntrys, setResumeEntrys] = useState([])
+
+  useEffect(() => {
+    resumeEntrysService.getAll()
+      .then(entrys => {
+        console.log("Fetched entrys: ", entrys)
+        setResumeEntrys(entrys)
+      })
+      .catch(error => {
+        console.error("Error in resume component when fetching: ", error)
+      })
+  }, [])
+
   // checks for subdomain "edit" to return proper page
   if (window.location.host.split(".")[0] === "edit") {
     return(
-      <h1>
-            Login
-      </h1>
+      <EditingPage />
     )
   }
   // else, default landing page
@@ -31,7 +42,7 @@ const App = () => {
         />
         <Route
           path="/resume"
-          element={<Resume />}
+          element={<Resume resumeEntrys={resumeEntrys} />}
         />
         <Route
           path="/projects"

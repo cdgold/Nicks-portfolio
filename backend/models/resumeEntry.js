@@ -1,8 +1,9 @@
 const mongoose = require("mongoose")
 
-// CATEGORIES: education, job, skill
+// CATEGORIES: education, job, skill, pdf
 
-// skill do not have a startDate or endDate
+// skills and pdf do not have a startDate or endDate
+// pdf title is link to pdf of resume
 
 const resumeEntrySchema = new mongoose.Schema({
   title: String,
@@ -24,4 +25,6 @@ resumeEntrySchema.set("toJSON", {
   }
 })
 
-module.exports = mongoose.model("resumeEntry", resumeEntrySchema)
+const resumeEntry = mongoose.model("resumeEntry", resumeEntrySchema)
+
+module.exports = resumeEntry
