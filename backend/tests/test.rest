@@ -1,0 +1,12 @@
+GET http://localhost:3003/api/resumeEntrys/
+###
+POST http://localhost:3003/api/resumeEntrys/
+content-type: application/json
+
+{
+    "title": "BingBong",
+    "subtitle": "analytics intern",
+    "startDate": "12/1/2013",
+    "endDate": "5/2/2014",
+    "category": "education"
+}
