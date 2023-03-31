@@ -12,13 +12,8 @@ resumeEntrysRouter.get("/", async (request, response, next) => {
   })
 
 resumeEntrysRouter.post("/", async (request, response, next) => {
-  const body = request.body[0]
-  console.log("body is : ", body)
-  console.log("body.category is : ", body.category)
-  console.log("acceptable categories is : ", acceptableCategories)
-  console.log("third statment is: ", acceptableCategories.includes(body.category))
+  const body = request.body
   if(!("title" in body) || !("category" in body) || !acceptableCategories.includes(body.category)){
-    console.log("entered here")
     return response.status(400).end()
   }
 

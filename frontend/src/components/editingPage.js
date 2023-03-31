@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react"
 import loginService from "../services/login"
 import ResumeEntryCreationForm from "./editingPageComponents/resumeEntryCreationForm"
 import resumeEntrysService from "../services/resumeEntrys"
+import projectsService from "../services/projects"
+
+const setTokens = (token) => {
+  resumeEntrysService.setToken(token)
+  projectsService.setToken(token)
+}
 
 const PDFForm = () => {
   return null
@@ -24,7 +30,7 @@ const EditingPage = ({ resumeEntrys, projects }) => {
       token: "asdf"
     }
     setLoggedInUser(loggedUser)
-    resumeEntrysService.setToken(loggedUser.token)
+    setTokens(loggedUser.token)
   }, [])
 
   const handleLogin = async (event) => {
@@ -35,7 +41,7 @@ const EditingPage = ({ resumeEntrys, projects }) => {
         { username: event.target.username.value, password: event.target.password.value }
       )
       setLoggedInUser(userResponse)
-      resumeEntrysService.setToken(userResponse.token)
+      setTokens(userResponse.token)
       window.localStorage.setItem("loggedNickUser", JSON.stringify(userResponse))
     }
     catch (exception) {

@@ -168,13 +168,14 @@ const exampleResumeEntrys = [
 
 const Resume = ({ resumeEntrys }) => {
   //const [resumeEntrys, setResumeEntrys] = useState([])
-  //resumeEntrys = exampleResumeEntrys
+  resumeEntrys = exampleResumeEntrys
   //useEffect(() => {
   //  setResumeEntrys(exampleResumeEntrys)
   //}, [])
   /*
   */
   if( resumeEntrys !== [] ) {
+    console.log("Resume entrys is: ", resumeEntrys)
     return(
       <div>
         <StyledGrid>

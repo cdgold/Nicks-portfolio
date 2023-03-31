@@ -40,10 +40,10 @@ const ResumeEntryCreationForm = () => {
         category: category,
         bullets: bullets
       }
-      if (event.category !== "skill") {
-        formEntry = [{ ...formEntry, startDate:startDate, endDate:endDate }]
+      if (formEntry.category !== "skill") {
+        formEntry = { ...formEntry, startDate:startDate, endDate:endDate }
       }
-      console.log("Sending formEntry: ", formEntry, " off to resumeEntrysService")
+      //console.log("Sending formEntry: ", formEntry, " off to resumeEntrysService")
       resumeEntrysService.postEntry(formEntry)
     }
     catch (exception) {
