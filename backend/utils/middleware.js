@@ -9,6 +9,12 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
+const subdomain = (reqest, response, next) => {
+    if (reqest.hostname.match(/post\./g)) {
+        response.sendFile
+    }
+}
+
 const unknownEndpoint = (request, response, next) => {
   response.status(404).send({ error: "unknown endpoint" })
 }
@@ -29,6 +35,7 @@ const errorHandler = (error, request, response, next) => {
 
 module.exports = {
   requestLogger,
+  subdomain,
   unknownEndpoint,
   errorHandler
 }

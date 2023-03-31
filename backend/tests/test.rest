@@ -4,9 +4,8 @@ POST http://localhost:3003/api/resumeEntrys/
 content-type: application/json
 
 {
-    "username": "admin",
-    "password": "password",
-    "name": "rootUser"
+    "title": "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=sharing",
+    "category": "pdf"
 }
 ###
-DELETE http://localhost:3003/api/resumeEntrys/641f5cd7704e46a96363d755
+DELETE http://localhost:3003/api/resumeEntrys/64220d4a7a4a7c6dd291a495

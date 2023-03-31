@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react"
 import loginService from "../services/login"
+import ResumeEntryCreationForm from "./editingPageComponents/resumeEntryCreationForm"
+import resumeEntrysService from "../services/resumeEntrys"
 
-const EditingPage = () => {
+const PDFForm = () => {
+  return null
+}
+
+const EditingPage = ({ resumeEntrys, projects }) => {
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [errorNotification, setErrorNotification] = useState(null)
+
 
   //Checking if cache of logged in user
   useEffect(() => {
@@ -11,6 +18,13 @@ const EditingPage = () => {
     if (loggedUserJSON) {
       setLoggedInUser(JSON.parse(loggedUserJSON))
     }
+    const loggedUser = {
+      name: "Bill Withers",
+      username: "bill",
+      token: "asdf"
+    }
+    setLoggedInUser(loggedUser)
+    resumeEntrysService.setToken(loggedUser.token)
   }, [])
 
   const handleLogin = async (event) => {
@@ -21,6 +35,7 @@ const EditingPage = () => {
         { username: event.target.username.value, password: event.target.password.value }
       )
       setLoggedInUser(userResponse)
+      resumeEntrysService.setToken(userResponse.token)
       window.localStorage.setItem("loggedNickUser", JSON.stringify(userResponse))
     }
     catch (exception) {
@@ -58,7 +73,16 @@ const EditingPage = () => {
   }
   else {        // loggedInUser exists
     return (
-      <h2> Edit website, {loggedInUser.name} with token {loggedInUser.token} </h2>
+      <div>
+        <h2> Edit website, {loggedInUser.name} </h2>
+        <div>
+          <h2> Manage resume entries </h2>
+          <ResumeEntryCreationForm resumeEntrys={resumeEntrys} user={loggedInUser}/>
+        </div>
+        <div>
+          <h2> Manage projects </h2>
+        </div>
+      </div>
     )
   }
 }

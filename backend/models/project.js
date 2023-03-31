@@ -2,7 +2,9 @@ const mongoose = require("mongoose")
 
 const projectSchema = new mongoose.Schema({
   title: String,
-  description: String
+  description: String,
+  url: String,
+  writtenOnDate: Date
 })
 
 // figure out way to upload
