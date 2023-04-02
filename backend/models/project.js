@@ -1,9 +1,12 @@
 const mongoose = require("mongoose")
 
+// fileTypes are: PDF, video, image
+
 const projectSchema = new mongoose.Schema({
   title: String,
   description: String,
-  url: String,
+  fileURL: String,
+  fileType: String,
   writtenOnDate: Date
 })
 

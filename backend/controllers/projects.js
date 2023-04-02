@@ -12,12 +12,21 @@ projectsRouter.get("/", async (request, response, next) => {
 projectsRouter.post("/", async (request, response, next) => {
   const body = request.body
   console.log("Body is: ", body)
-  if(!("title" in body) || !("description" in body)){
-    return response.status(400).end()
+  if(!("title" in body)){
+    return response.status(400).json({
+      error: "projects require a title"
+    }).end()
   }
 
   try {
     const project = new Project({ ...body })
+    if ("fileURL" in body){
+      if (!"fileType" in body){
+        return response.status(400).json({
+          error: "fileType must be included with URL"
+        }).end()
+      }
+    }
     const savedproject = await project.save()
     response.json(savedproject)
   }

@@ -12,18 +12,45 @@ const getAll = async () => {
   return response.data
 }
 
-const postEntry = async ( newEntry ) => {
+const postProject = async (newProject) => {
   const config = {
     headers: { Authorization: token },
   }
-  console.log("new entry is: ", newEntry)
-  console.log("new entry[0] is: ", newEntry[0])
-  const response = await axios.post(baseUrl, newEntry, config)
+  const response = await axios.post(baseUrl, newProject, config)
   return response.data
 }
 
+const putProject = async (newProject) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const projectToPut = {
+    title: newProject.title,
+    description: newProject.description,
+    fileURL: newProject.description,
+    fileType: newProject.description,
+    writtenOnDate: newProject.description
+  }
+  const putProjectURL = baseUrl + "/" + newProject.id
+  const response = await axios.put(putProjectURL, projectToPut, config)
+  return response.data
+}
+
+const deleteProject = async (project) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const deleteUrl = baseUrl + "/" + project.id
+  console.log("Deleting project at: ", project.id)
+  const response = await axios.delete(deleteUrl, config)
+  return response.data
+}
+
+
 export default {
   getAll,
-  postEntry,
-  setToken
+  postProject,
+  setToken,
+  putProject,
+  deleteProject
 }

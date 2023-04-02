@@ -1,5 +1,5 @@
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import loadingGif from "../assets/loadingAnimations/spinningBalls.gif"
 
@@ -25,7 +25,7 @@ const sampleProjects = [{
   url: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/preview",
   writtenOnDate: "September 2020" }]
 
-const ProjectDiv = styled.div`
+const VideoDiv = styled.div`
 
 `
 
@@ -36,13 +36,18 @@ const PDFDiv = styled.div`
 `
 
 const Project = ({ project }) => {
+  const [iframeWidth, setIframeWidth] = useState(null)
+  const [iframeHeight, setIframeHeight] = useState(null)
+  useEffect(() => {
+
+  }, [project])
   return(
     <div>
       <h2> {project.title} </h2>
       <h4> From {project.writtenOnDate} </h4>
       <p> {project.description} </p>
       <PDFDiv>
-        <iframe src="https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/preview" width="640" height="480" allow="autoplay"></iframe>
+        <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay"></iframe>
       </PDFDiv>
     </div>
   )
@@ -54,12 +59,12 @@ const ProjectsDiv = styled.div`
 `
 
 const Projects = ({ projects }) => {
-  projects = sampleProjects
+  //projects = sampleProjects
   return(
     <ProjectsDiv>
       {projects.map((project, index)  => {
         console.log("Project is: ", project)
-        return(<Project key={index} project={project}/>)
+        return(<Project key={project.id} project={project}/>)
       })}
     </ProjectsDiv>
   )

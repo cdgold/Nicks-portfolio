@@ -186,7 +186,7 @@ const Resume = ({ resumeEntrys }) => {
               //console.log("in components/resume, entry is: ", entry)
               //console.log("category of : ", entry.category, " !== education")
                 if (entry.category === "education") {
-                  return(<li key={entry.title}> {entry.title} </li>)
+                  return(<li key={entry.id}> {entry.title} </li>)
                 }
               })}
             </ul>
@@ -195,7 +195,7 @@ const Resume = ({ resumeEntrys }) => {
             <h3> skills </h3>
             {resumeEntrys.map(entry => {
               if (entry.category === "skill"){
-                return(<li key={entry.title}> {entry.title} </li>)
+                return(<li key={entry.id}> {entry.title} </li>)
               }
             })}
           </StyledSkillsBox>
@@ -204,7 +204,7 @@ const Resume = ({ resumeEntrys }) => {
             <ol>
               {resumeEntrys.map(entry => {
                 if (entry.category === "job"){
-                  return(<li key={entry.title}> {entry.title} </li>)
+                  return(<li key={entry.id}> {entry.title} </li>)
                 }
               })}
             </ol>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import loginService from "../services/login"
 import ResumeEntryCreationForm from "./editingPageComponents/resumeEntryCreationForm"
+import ProjectCreationForm from "./editingPageComponents/projectsEditing"
 import resumeEntrysService from "../services/resumeEntrys"
 import projectsService from "../services/projects"
 
@@ -87,6 +88,7 @@ const EditingPage = ({ resumeEntrys, projects }) => {
         </div>
         <div>
           <h2> Manage projects </h2>
+          <ProjectCreationForm projects={projects} user={loggedInUser}/>
         </div>
       </div>
     )

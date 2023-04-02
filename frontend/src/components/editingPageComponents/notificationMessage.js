@@ -1,0 +1,27 @@
+import React, { useState } from "react"
+import styled from "styled-components"
+
+const MessageDiv = styled.div`
+    background: azure;
+    border: solid;
+    border-radius: 5px;
+    margin-bottom: 10px;
+`
+
+const NotificationMessage = ({ message, messageColor }) => {
+
+
+  if(message !== null && message !== ""){
+    return(
+      <div>
+        <MessageDiv style={{ color: messageColor, borderColor: messageColor }}>
+          {message}
+        </MessageDiv>
+      </div>
+    )
+  }
+  return(null)
+}
+
+
+export default NotificationMessage
