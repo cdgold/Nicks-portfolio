@@ -4,6 +4,9 @@ import { ThemeProvider } from "styled-components"
 
 const theme = {
   colors: {
+    primary: "#c88aff",
+    secondary: "#9748f7",
+    tertiary: "#681de0",
     beige: "#FFF8E7",
     eggCream: "#f5f1b5",
     darkCream: "#fff896",

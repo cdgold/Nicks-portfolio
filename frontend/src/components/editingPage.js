@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import loginService from "../services/login"
-import ResumeEntryCreationForm from "./editingPageComponents/resumeEntryCreationForm"
-import ProjectCreationForm from "./editingPageComponents/projectsEditing"
+import ResumeEntrysEditing from "./editingPageComponents/resumeEntrysEditing"
+import ProjectsEditing from "./editingPageComponents/projectsEditing"
 import resumeEntrysService from "../services/resumeEntrys"
 import projectsService from "../services/projects"
 
@@ -84,11 +84,11 @@ const EditingPage = ({ resumeEntrys, projects }) => {
         <h2> Edit website, {loggedInUser.name} </h2>
         <div>
           <h2> Manage resume entries </h2>
-          <ResumeEntryCreationForm resumeEntrys={resumeEntrys} user={loggedInUser}/>
+          <ResumeEntrysEditing resumeEntrys={resumeEntrys} user={loggedInUser}/>
         </div>
         <div>
           <h2> Manage projects </h2>
-          <ProjectCreationForm projects={projects} user={loggedInUser}/>
+          <ProjectsEditing projects={projects} user={loggedInUser}/>
         </div>
       </div>
     )

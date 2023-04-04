@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import React, { useState } from "react"
 import projectsService from "../../services/projects"
 import ProjectForm from "./projectForm"
@@ -45,11 +46,12 @@ const ProjectDiv = styled.div`
 const Project = ({ project }) => {
   const [editMode, setEditMode] = useState(false)
 
-  const reviseProject = (project) => {
-    projectsService.putProject(project)
+  const reviseProject = (newProject) => {
+    newProject = { ...newProject, id:project.id }
+    projectsService.putProject(newProject)
   }
 
-  const deleteProject = (project) => {
+  const deleteProject = () => {
     projectsService.deleteProject(project)
   }
 
@@ -67,7 +69,7 @@ const Project = ({ project }) => {
             Project created on: {project.writtenOnDate} <br></br>
           </div>
           <button onClick={() => setEditMode(!editMode)}> edit this project </button>
-          <button onClick={() => deleteProject(project)}> delete this project </button>
+          <button onClick={() => deleteProject()}> delete this project </button>
           <br></br>
         </Togglable>
       </ProjectDiv>
@@ -76,18 +78,8 @@ const Project = ({ project }) => {
   else {       // edit mode is true
     return(
       <ProjectDiv>
-        {`What's up ${project.title}`}
-        <p>
-          {project.description}
-        </p>
-        <div>
-        URL of project file: {project.fileURL} <br></br>
-        Kind of project media: {project.fileType} <br></br>
-        Project created on: {project.writtenOnDate} <br></br>
-        </div>
+        <ProjectForm project={project} submitFunction={reviseProject} />
         <button onClick={() => setEditMode(!editMode)}> stop editing this project </button>
-        <button onClick={() => reviseProject(project)}> confirm edits </button>
-        <button onClick={() => deleteProject(project)}> delete this project </button> <br></br>
       </ProjectDiv>
     )
   }
@@ -95,16 +87,27 @@ const Project = ({ project }) => {
 }
 
 const ProjectsEditing = ({ projects }) => {
-  projects = sampleProjects
+  //projects = sampleProjects
 
   const handleProjectCreation= (newProject) => {
-    projectsService.postProject(newProject)
+    try{
+      projectsService.postProject(newProject)
+    }
+    catch (error){
+      throw(error)
+    }
   }
-
+  if(projects !== null){
+    return(
+      <div>
+        <ProjectForm submitFunction={handleProjectCreation}/>
+        {projects.map(project => <Project key={project.id} project={project}/>)}
+      </div>
+    )
+  }
   return(
     <div>
       <ProjectForm submitFunction={handleProjectCreation}/>
-      {projects.map(project => <Project key={project.id} project={project}/>)}
     </div>
   )
 }

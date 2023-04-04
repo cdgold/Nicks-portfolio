@@ -5,18 +5,21 @@ import cursive_name from "../assets/images/cursive_name.png"
 
 const HeaderStyled = styled.div`
   position: fixed;
-  top: 0px !important;
-  left: 0px !important;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  top: 0px;
+  left: 0px;
   height: 3em;
   width: 100vw;
-  background-color: ${props => props.theme.colors.darkOrange};
+  background-color: ${props => props.theme.colors.primary};
   overflow:auto;
-  text-align:right;
 `
 
 const NameImage = styled.img`
-  position: fixed;
+  position: absolute;
   left: 0px;
+  top: 0px;
   padding-top: .5em;
   padding-left: .5em;
   height: 2em;
@@ -24,8 +27,19 @@ const NameImage = styled.img`
 
 const StyledLink = styled(Link)`
   color: white;
-  textDecoration: none;
-  padding-top: 1em;
+  text-decoration: none;
+  padding-right: 20px;
+  &:hover,
+  &:focus {
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `
 
 
@@ -35,8 +49,8 @@ const Header = () => {
       <Link to="/" >
         <NameImage src={cursive_name} alt="Nick Giotis in cursive"/>
       </Link>
-      <StyledLink to="/projects">{"Projects"}</StyledLink> {" | "}
-      <StyledLink to="/resume" style={{ "paddingRight": "5vw" }}>{"Resume"}</StyledLink>
+      <StyledLink to="/projects" >{"Projects"}</StyledLink>
+      <StyledLink to="/resume" style={{ paddingRight: "2em" }}>{"Resume"}</StyledLink>
     </HeaderStyled>
   )
 }

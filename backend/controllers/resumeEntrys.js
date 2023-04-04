@@ -36,6 +36,36 @@ resumeEntrysRouter.post("/", async (request, response, next) => {
   }
 })
 
+resumeEntrysRouter.put("/:id", async (request, response, next) => {
+  const body = request.body
+  if(!("title" in body)){
+    return response.status(400).json({
+      error: "projects require a title"
+    }).end()
+  }
+
+  try {
+    const newResumeEntry = {
+      title: body.title,
+      subtitle: body.subtitle,
+      category: body.category,
+      startDate: body.startDate,
+      endDate: body.endDate,
+      bullets: body.bullets
+    }
+    const updatedResumeEntry = await ResumeEntry.findByIdAndUpdate(request.params.id, newResumeEntry, { new: true })
+    if (updatedResumeEntry == null){
+      return response.status(400).json({
+        error: "bad id"
+      })
+    }
+    response.json(updatedResumeEntry)
+  }
+  catch (error) {
+    next(error)
+  }
+})
+
 resumeEntrysRouter.delete("/:id", async (request, response, next) => {
   try {
     const foundResumeEntry = await ResumeEntry.findById(request.params.id)

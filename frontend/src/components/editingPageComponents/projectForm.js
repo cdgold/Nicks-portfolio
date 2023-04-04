@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import NotificationMessage from "./notificationMessage"
 
 const ProjectForm = ({ project=null, submitFunction }) => {
@@ -6,9 +6,19 @@ const ProjectForm = ({ project=null, submitFunction }) => {
   const [description, setDescription] = useState("")
   const [fileURL, setFileURL] = useState("")
   const [fileType, setFileType] = useState("none")
-  const [writtenOnDate, setWrittenOnDate] = useState(null)
+  const [writtenOnDate, setWrittenOnDate] = useState("")
   const [messageColor, setMessageColor] = useState("black")
   const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    if(project !== null){
+      setTitle(project.title)
+      setDescription(project.description)
+      setFileURL(project.fileURL)
+      setFileType(project.fileType)
+      setWrittenOnDate(project.writtenOnDate)
+    }
+  }, [project])
 
   const handleSubmit = async (event) => {
     try {
@@ -50,6 +60,7 @@ const ProjectForm = ({ project=null, submitFunction }) => {
             name="title"
             type="text"
             onChange={event => setTitle(event.target.value)}
+            value={title}
           />
         </label>
         <label> {"Date of project:"}
@@ -57,6 +68,7 @@ const ProjectForm = ({ project=null, submitFunction }) => {
             name="writtenOnDate"
             type="text"
             onChange={event => setWrittenOnDate(event.target.value)}
+            value={writtenOnDate}
           />
         </label>
         <label> {"Description of project:"}
@@ -65,11 +77,12 @@ const ProjectForm = ({ project=null, submitFunction }) => {
             cols="50"
             rows="10"
             onChange={event => setDescription(event.target.value)}
+            value={description}
           >
           </textarea>
         </label>
         <div> {"File type:"}
-          <label><input type="radio" name="fileType" value="none" defaultChecked={true} onChange={event => setFileType(event.target.value)}/> None </label>
+          <label><input type="radio" name="fileType" value="none" onChange={event => setFileType(event.target.value)}/> None </label>
           <label><input type="radio" name="fileType" value="PDF"  onChange={event => setFileType(event.target.value)} /> PDF </label>
           <label><input type="radio" name="fileType" value="video" onChange={event => setFileType(event.target.value)} /> Video </label>
           <label><input type="radio" name="fileType" value="image" onChange={event => setFileType(event.target.value)}/> Image </label>

@@ -20,8 +20,44 @@ const postEntry = async ( newEntry ) => {
   return response.data
 }
 
+
+const deleteEntry = async (resumeEntry) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const deleteUrl = baseUrl + "/" + resumeEntry.id
+  console.log("Deleting project at: ", resumeEntry.id)
+  const response = await axios.delete(deleteUrl, config)
+  return response.data
+}
+
+const putEntry = async (newEntry) => {
+  try{
+    const config = {
+      headers: { Authorization: token },
+    }
+    const entryToPut = {
+      title: newEntry.title,
+      subtitle: newEntry.subtitle,
+      category: newEntry.category,
+      startDate: newEntry.startDate,
+      endDate: newEntry.endDate,
+      bullets: newEntry.bullets
+    }
+    const putEntryURL = baseUrl + "/" + newEntry.id
+    console.log("Attempting put at ", putEntryURL, " with ", entryToPut)
+    const response = await axios.put(putEntryURL, entryToPut, config)
+    return response.data
+  }
+  catch (error) {
+    throw(error)
+  }
+}
+
 export default {
   getAll,
   postEntry,
+  deleteEntry,
+  putEntry,
   setToken
 }

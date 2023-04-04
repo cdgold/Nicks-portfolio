@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import resumeEntrysService from "../services/resumeEntrys"
 import styled, { keyframes } from "styled-components"
 //import { Document, Page, pdfjs } from "react-pdf"
 //pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
@@ -63,21 +62,24 @@ const StyledGrid = styled.section`
   padding-top: 4rem;
   display: grid;
   grid-template-columns: 10% 16% 16% 16% 16% 16% 10%;
-  grid-template-rows: 30% 5% 30% 5% 30%;
   overflow: hidden;
-  width: 60em;
+  width: 100vw;
+  font-size: 16px;
 `
 
 const ResumeBox = styled.div`
   border-radius: 5px; 
-  padding-top: 5px;
-  padding-bottom: 40px;
-  padding-left: 15px;
-  padding-right: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
 `
 
 const StyledEducationBox = styled(ResumeBox)`
-  background-color: ${props => props.theme.colors.eggCream};
+  background-color: ${props => props.theme.colors.primary};
   animation: ${fadeIn}, ${slideInLeft};
   grid-column: 1/ span 5;
   grid-row: 1 / 3;
@@ -85,111 +87,90 @@ const StyledEducationBox = styled(ResumeBox)`
   z-index: 1;
 `
 
+const StyledList = styled.ol`
+  list-style: none;
+  margin-top: 0px;
+`
+
 const StyledSkillsBox = styled(ResumeBox)`
-  background-color: ${props => props.theme.colors.darkCream};
+  background-color: ${props => props.theme.colors.secondary};
   text-align: left;
   animation: ${fadeIn}, ${slideInRight};
-  grid-column: 4 / span 3;
+  grid-column: 4 / span 4;
+  margin-right: 20px;
   grid-row: 2 / 5;
   animation-duration: 2s, 2.5s;
   z-index: 2;
 `
 const StyledJobsBox = styled(ResumeBox)`
-  background-color: ${props => props.theme.colors.lightOrange};
+  background-color: ${props => props.theme.colors.tertiary};
   animation: ${fadeIn}, ${slideInFromBottom};
-  grid-column: 3 / span 2;
+  grid-column: 2 / span 5;
   grid-row: span 2 / 6;
   animation-duration: 3s, 3s;
   z-index: 3;
 `
-
-const exampleResumeEntrys = [
-  {
-    title: "Georgetown University",
-    subtitle: "B.A. in Economics",
-    category: "education",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
-    bullets: [
-      "DBMOAF winner",
-      "Water Polo captain"
-    ]
-  },
-  {
-    title: "Connecticut High",
-    category: "education",
-    startDate: "8/1/2015",
-    endDate: "5/1/2029",
-    bullets: [
-      "Swimming Nationals Finalist"
-    ]
-  },
-  {
-    title: "Boston Consulting Group",
-    subtitle: "Summer Intern",
-    category: "job",
-    startDate: "5/1/2022",
-    endDate: "7/1/2022",
-    bullets: [
-      "Made the most slide decks",
-      "Ate lots of cheese",
-      "Got on airplane to texas",
-      "Money $20,391 money money wooga"
-    ]
-  },
-  {
-    title: "Lorem ipsum",
-    subtitle: "winter intern",
-    category: "job",
-    startDate: "10/1/2022",
-    endDate: "12/1/2022",
-    bullets: [
-      "Made the most slide decks",
-      "Ate lots of cheese",
-      "Got on airplane to texas",
-      "Money $25,391 money money wooga",
-      "An extra bullet for contrast"
-    ]
-  },
-  {
-    title: "proficient in powerpoint",
-    category: "skill"
-  },
-  {
-    title: "can speak espanol",
-    subtitle: "4th level by Congressional Standards",
-    category: "skill"
-  },
-  {
-    title: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=sharing",
-    category: "pdf"
-  }
-]
+const ResumeEntryListing = ({ resumeEntry }) => {
+  console.log("Entry is: ", resumeEntry)
+  return(
+    <li>
+      {resumeEntry.title}<br></br>
+      <i style={{ fontSize: "90%" }}>{resumeEntry.subtitle}</i>
+      {(resumeEntry.bullets !== undefined && resumeEntry.bullets !== []) ? `boola` : null}
+    </li>
+  )
+}
 
 const Resume = ({ resumeEntrys }) => {
   //const [resumeEntrys, setResumeEntrys] = useState([])
-  resumeEntrys = exampleResumeEntrys
+  //resumeEntrys = exampleResumeEntrys
   //useEffect(() => {
   //  setResumeEntrys(exampleResumeEntrys)
   //}, [])
   /*
   */
+
+  const calculateGridRowSizes = () => {   //finds appropriate heights for resume categories
+    const initialCounts = {
+      job: 0,
+      education: 0,
+      skill: 0
+    }
+    console.log(resumeEntrys, " is resumeEntrys in gridrowsizes")
+    const countsByCategory = resumeEntrys.reduce((counts, entry) => {
+      if (entry.category === "education"){
+        counts.education = counts.education + 1
+      }
+      if (entry.category === "skill"){
+        counts.skill = counts.skill + 1
+      }
+      if (entry.category === "job"){
+        counts.job = counts.job + 1
+      }
+      return counts
+    }, initialCounts)
+    console.log("Final counts is: ", countsByCategory)
+    const firstRowSize = (countsByCategory.education*2.5) + 4
+    const secondRowSize = (countsByCategory.skill*2) + 4
+    const thirdRowSize = (countsByCategory.job*2.5) + 4
+    return `${firstRowSize}em 1em ${secondRowSize}em 1em ${thirdRowSize}em`
+  }
+
   if( resumeEntrys !== [] ) {
-    console.log("Resume entrys is: ", resumeEntrys)
     return(
       <div>
-        <StyledGrid>
+        <StyledGrid style={{ gridTemplateRows: calculateGridRowSizes() }}>
           <StyledEducationBox>
-            <h3> education </h3>
-            <ul>
+            <h3 style={{ paddingBottom: "0px", marginBottom: "5px" }}> education </h3>
+            <StyledList>
               {resumeEntrys.map(entry => {
               //console.log("in components/resume, entry is: ", entry)
               //console.log("category of : ", entry.category, " !== education")
                 if (entry.category === "education") {
-                  return(<li key={entry.id}> {entry.title} </li>)
+                  return(<ResumeEntryListing key={entry.id} resumeEntry={entry} />)
                 }
               })}
-            </ul>
+            </StyledList>
           </StyledEducationBox>
           <StyledSkillsBox>
             <h3> skills </h3>
@@ -201,13 +182,13 @@ const Resume = ({ resumeEntrys }) => {
           </StyledSkillsBox>
           <StyledJobsBox>
             <h3> work experience </h3>
-            <ol>
+            <StyledList>
               {resumeEntrys.map(entry => {
                 if (entry.category === "job"){
                   return(<li key={entry.id}> {entry.title} </li>)
                 }
               })}
-            </ol>
+            </StyledList>
           </StyledJobsBox>
         </StyledGrid>
       PDF of resume is available <a href={resumeEntrys.find(entry => entry.category === "pdf").title}> here </a> <br></br>
