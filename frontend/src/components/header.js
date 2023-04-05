@@ -14,6 +14,7 @@ const HeaderStyled = styled.div`
   width: 100vw;
   background-color: ${props => props.theme.colors.primary};
   overflow:auto;
+  z-index: 10;
 `
 
 const NameImage = styled.img`

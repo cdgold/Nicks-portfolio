@@ -63,8 +63,8 @@ const StyledGrid = styled.section`
   display: grid;
   grid-template-columns: 10% 16% 16% 16% 16% 16% 10%;
   overflow: hidden;
-  width: 100vw;
-  font-size: 16px;
+  width: 95vw;
+  font-size: 20px;
 `
 
 const ResumeBox = styled.div`
@@ -100,7 +100,7 @@ const StyledSkillsBox = styled(ResumeBox)`
   margin-right: 20px;
   grid-row: 2 / 5;
   animation-duration: 2s, 2.5s;
-  z-index: 2;
+  z-index: 3;
 `
 const StyledJobsBox = styled(ResumeBox)`
   background-color: ${props => props.theme.colors.tertiary};
@@ -108,28 +108,35 @@ const StyledJobsBox = styled(ResumeBox)`
   grid-column: 2 / span 5;
   grid-row: span 2 / 6;
   animation-duration: 3s, 3s;
-  z-index: 3;
+  z-index: 2;
 `
+const DisplayBullets = ({ bullets }) => {
+  if (bullets !== undefined && bullets.length > 0) {
+    return(
+      <ul>
+        {bullets.map((bullet, index) => {
+          return(<li key={index} style={{ fontSize: "85%" }}>{bullet}</li>)
+        })}
+      </ul>
+    )
+  }
+  return null
+}
+
 const ResumeEntryListing = ({ resumeEntry }) => {
   console.log("Entry is: ", resumeEntry)
   return(
     <li>
-      {resumeEntry.title}<br></br>
+      {resumeEntry.title} <span style={{ float: "right" }}>
+        {(resumeEntry.startDate !== undefined && resumeEntry.endDate !== undefined) ? `${resumeEntry.startDate} to ${resumeEntry.endDate}` : null}
+      </span><br></br>
       <i style={{ fontSize: "90%" }}>{resumeEntry.subtitle}</i>
-      {(resumeEntry.bullets !== undefined && resumeEntry.bullets !== []) ? `boola` : null}
+      <DisplayBullets bullets={resumeEntry.bullets} />
     </li>
   )
 }
 
 const Resume = ({ resumeEntrys }) => {
-  //const [resumeEntrys, setResumeEntrys] = useState([])
-  //resumeEntrys = exampleResumeEntrys
-  //useEffect(() => {
-  //  setResumeEntrys(exampleResumeEntrys)
-  //}, [])
-  /*
-  */
-
   const calculateGridRowSizes = () => {   //finds appropriate heights for resume categories
     const initialCounts = {
       job: 0,
@@ -140,19 +147,28 @@ const Resume = ({ resumeEntrys }) => {
     const countsByCategory = resumeEntrys.reduce((counts, entry) => {
       if (entry.category === "education"){
         counts.education = counts.education + 1
+        if (entry.bullets !== undefined){
+          counts.education = counts.education + entry.bullets.length
+        }
       }
       if (entry.category === "skill"){
         counts.skill = counts.skill + 1
+        if (entry.bullets !== undefined){
+          counts.skill = counts.skill + entry.bullets.length
+        }
       }
       if (entry.category === "job"){
         counts.job = counts.job + 1
+        if (entry.bullets !== undefined){
+          counts.job = counts.job + entry.bullets.length
+        }
       }
       return counts
     }, initialCounts)
     console.log("Final counts is: ", countsByCategory)
-    const firstRowSize = (countsByCategory.education*2.5) + 4
-    const secondRowSize = (countsByCategory.skill*2) + 4
-    const thirdRowSize = (countsByCategory.job*2.5) + 4
+    const firstRowSize = (countsByCategory.education*1.1) + 4
+    const secondRowSize = (countsByCategory.skill) + 4
+    const thirdRowSize = (countsByCategory.job*1.1) + 4
     return `${firstRowSize}em 1em ${secondRowSize}em 1em ${thirdRowSize}em`
   }
 
@@ -174,18 +190,24 @@ const Resume = ({ resumeEntrys }) => {
           </StyledEducationBox>
           <StyledSkillsBox>
             <h3> skills </h3>
-            {resumeEntrys.map(entry => {
-              if (entry.category === "skill"){
-                return(<li key={entry.id}> {entry.title} </li>)
-              }
-            })}
-          </StyledSkillsBox>
-          <StyledJobsBox>
-            <h3> work experience </h3>
             <StyledList>
               {resumeEntrys.map(entry => {
-                if (entry.category === "job"){
-                  return(<li key={entry.id}> {entry.title} </li>)
+              //console.log("in components/resume, entry is: ", entry)
+              //console.log("category of : ", entry.category, " !== education")
+                if (entry.category === "skill") {
+                  return(<ResumeEntryListing key={entry.id} resumeEntry={entry} />)
+                }
+              })}
+            </StyledList>
+          </StyledSkillsBox>
+          <StyledJobsBox>
+            <h3 style={{ paddingBottom: "0px", marginBottom: "5px" }}> work experience </h3>
+            <StyledList>
+              {resumeEntrys.map(entry => {
+              //console.log("in components/resume, entry is: ", entry)
+              //console.log("category of : ", entry.category, " !== education")
+                if (entry.category === "job") {
+                  return(<ResumeEntryListing key={entry.id} resumeEntry={entry} />)
                 }
               })}
             </StyledList>
