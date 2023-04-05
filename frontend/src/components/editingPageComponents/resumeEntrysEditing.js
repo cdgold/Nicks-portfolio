@@ -5,69 +5,6 @@ import ResumeEntryForm from "./resumeEntryForm"
 import Togglable from "../../utils/togglable"
 import styled from "styled-components"
 
-const exampleResumeEntrys = [
-  {
-    title: "Georgetown University",
-    subtitle: "B.A. in Economics",
-    category: "education",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
-    bullets: [
-      "DBMOAF winner",
-      "Water Polo captain"
-    ]
-  },
-  {
-    title: "Connecticut High",
-    category: "education",
-    startDate: "8/1/2015",
-    endDate: "5/1/2029",
-    bullets: [
-      "Swimming Nationals Finalist"
-    ]
-  },
-  {
-    title: "Boston Consulting Group",
-    subtitle: "Summer Intern",
-    category: "job",
-    startDate: "5/1/2022",
-    endDate: "7/1/2022",
-    bullets: [
-      "Made the most slide decks",
-      "Ate lots of cheese",
-      "Got on airplane to texas",
-      "Money $20,391 money money wooga"
-    ]
-  },
-  {
-    title: "Lorem ipsum",
-    subtitle: "winter intern",
-    category: "job",
-    startDate: "10/1/2022",
-    endDate: "12/1/2022",
-    bullets: [
-      "Made the most slide decks",
-      "Ate lots of cheese",
-      "Got on airplane to texas",
-      "Money $25,391 money money wooga",
-      "An extra bullet for contrast"
-    ]
-  },
-  {
-    title: "proficient in powerpoint",
-    category: "skill"
-  },
-  {
-    title: "can speak espanol",
-    subtitle: "4th level by Congressional Standards",
-    category: "skill"
-  },
-  {
-    title: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=sharing",
-    category: "pdf"
-  }
-]
-
 const ResumeEntryDiv = styled.div`
   border-width: thin;
   border: solid;

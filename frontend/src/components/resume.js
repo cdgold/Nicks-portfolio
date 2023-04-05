@@ -59,7 +59,6 @@ const slideInFromBottom = keyframes`
 
 const StyledGrid = styled.section`
   padding: 10px;
-  padding-top: 4rem;
   display: grid;
   grid-template-columns: 10% 16% 16% 16% 16% 16% 10%;
   overflow: hidden;

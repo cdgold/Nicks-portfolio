@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react"
 import Header from "./components/header.js"
 import Home from "./components/home.js"
+import Footer from "./components/footer.js"
 import Resume from "./components/resume.js"
 import Projects from "./components/projects.js"
 import EditingPage from "./components/editingPage.js"
 import resumeEntrysService from "./services/resumeEntrys"
 import projectsService from "./services/projects"
+import styled from "styled-components"
 import {
   Routes, Route
 } from "react-router-dom"
@@ -105,6 +107,10 @@ const exampleProjects = [{
   id: "2" }]
 
 
+const RoutesDiv = styled.div`
+  margin-top: 4rem;
+`
+
 const App = () => {
 
   const [resumeEntrys, setResumeEntrys] = useState([])
@@ -139,21 +145,23 @@ const App = () => {
   return(
     <div>
       <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/resume"
-          element={<Resume resumeEntrys={resumeEntrys} />}
-        />
-        <Route
-          path="/projects"
-          element={<Projects projects={projects} />}
-        />
-      </Routes>
-      <p>{"dont"}</p>
+      <RoutesDiv>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home />}
+          />
+          <Route
+            path="/resume"
+            element={<Resume resumeEntrys={resumeEntrys} />}
+          />
+          <Route
+            path="/projects"
+            element={<Projects projects={projects} />}
+          />
+        </Routes>
+      </RoutesDiv>
+      <Footer />
     </div>
   )
 }

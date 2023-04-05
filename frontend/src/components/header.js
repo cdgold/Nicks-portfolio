@@ -8,8 +8,8 @@ const HeaderStyled = styled.div`
   display: flex;
   justify-content: right;
   align-items: center;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   height: 3em;
   width: 100vw;
   background-color: ${props => props.theme.colors.primary};
