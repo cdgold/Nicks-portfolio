@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled, { keyframes } from "styled-components"
+import animations from "../theme/animations"
+
 //import { Document, Page, pdfjs } from "react-pdf"
 //pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -15,46 +17,31 @@ import styled, { keyframes } from "styled-components"
   }
 */
 
-const fadeIn = keyframes`
-  from{
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }  
-`
-
 const slideInLeft = keyframes`
   from{
-    margin-left: -100%;
-    margin-right: 70%;
+    transform: translateX(-100%);
   }
   to{
-    margin-left: 0%;
-    margin-right: 0%;
+    transform: translateX(0%);
   }
 `
 
 const slideInRight = keyframes`
-  from{
-    margin-right: -100%;
-    margin-left: 100%;
-  }
-  to{
-    margin-right: 0%;
-    margin-left: 0%;
-  }
+from{
+  transform: translateX(100%);
+}
+to{
+  transform: translateX(0%);
+}
 `
 
 const slideInFromBottom = keyframes`
-  from{
-    margin-bottom: -100%;
-    margin-top: 100%;
-  }
-  to{
-    margin-bottom: 0%;
-    margin-top: 0%;
-  }
+from{
+  transform: translateY(100%);
+}
+to{
+  transform: translateX(0%);
+}
 `
 
 const StyledGrid = styled.section`
@@ -63,6 +50,7 @@ const StyledGrid = styled.section`
   grid-template-columns: 10% 16% 16% 16% 16% 16% 10%;
   overflow: hidden;
   width: 95vw;
+  min-width: 800px;
   font-size: 20px;
 `
 
@@ -79,10 +67,11 @@ const ResumeBox = styled.div`
 
 const StyledEducationBox = styled(ResumeBox)`
   background-color: ${props => props.theme.colors.primary};
-  animation: ${fadeIn}, ${slideInLeft};
+  animation: ${animations.fadeIn}, ${slideInLeft};
+  animation-duration: 2s, 2s;
+  will-change: transform, opacity;
   grid-column: 1/ span 5;
   grid-row: 1 / 3;
-  animation-duration: 1s, 2s;
   z-index: 1;
 `
 
@@ -94,19 +83,21 @@ const StyledList = styled.ol`
 const StyledSkillsBox = styled(ResumeBox)`
   background-color: ${props => props.theme.colors.secondary};
   text-align: left;
-  animation: ${fadeIn}, ${slideInRight};
+  animation: ${animations.fadeIn}, ${slideInRight};
+  animation-duration: 3s, 2.5s;
+  will-change: transform, opacity;
   grid-column: 4 / span 4;
   margin-right: 20px;
   grid-row: 2 / 5;
-  animation-duration: 2s, 2.5s;
   z-index: 3;
 `
 const StyledJobsBox = styled(ResumeBox)`
   background-color: ${props => props.theme.colors.tertiary};
-  animation: ${fadeIn}, ${slideInFromBottom};
+  animation: ${animations.fadeIn}, ${slideInFromBottom};
+  animation-duration: 3.5s, 3s;
+  will-change: transform, opacity;
   grid-column: 2 / span 5;
   grid-row: span 2 / 6;
-  animation-duration: 3s, 3s;
   z-index: 2;
 `
 const DisplayBullets = ({ bullets }) => {

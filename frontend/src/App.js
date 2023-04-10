@@ -12,6 +12,8 @@ import {
   Routes, Route
 } from "react-router-dom"
 
+// <content="width=device-width, initial-scale=1"> ?
+
 const exampleResumeEntrys = [
   {
     title: "Georgetown University",

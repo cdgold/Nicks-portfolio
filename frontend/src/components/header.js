@@ -12,6 +12,7 @@ const HeaderStyled = styled.div`
   left: 0;
   height: 3em;
   width: 100vw;
+  min-width: 400px;
   background-color: ${props => props.theme.colors.primary};
   overflow:auto;
   z-index: 10;

@@ -9,6 +9,7 @@ const ResumeEntryDiv = styled.div`
   border-width: thin;
   border: solid;
   margin-bottom: 5px;
+  min-width: 800px;
 `
 
 const ResumeEntry = ({ resumeEntry }) => {
