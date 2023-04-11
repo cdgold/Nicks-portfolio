@@ -25,13 +25,7 @@ const EditingPage = ({ resumeEntrys, projects }) => {
     if (loggedUserJSON) {
       setLoggedInUser(JSON.parse(loggedUserJSON))
     }
-    const loggedUser = {
-      name: "Bill Withers",
-      username: "bill",
-      token: "asdf"
-    }
-    setLoggedInUser(loggedUser)
-    setTokens(loggedUser.token)
+    console.log("Logged in user is: ", loggedInUser)
   }, [])
 
   const handleLogin = async (event) => {

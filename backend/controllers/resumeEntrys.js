@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 const acceptableCategories = ["education", "skill", "job", "pdf"]
 
 resumeEntrysRouter.get("/", async (request, response, next) => {
+  
     const resumeEntrys = await ResumeEntry
       .find({})
   
@@ -18,6 +19,10 @@ resumeEntrysRouter.post("/", async (request, response, next) => {
   }
 
   try {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if(!decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" })
+    }
     const resumeEntry = new ResumeEntry({ ...body })
     let oldPdf = null
     if(body.category === "pdf") {
@@ -45,6 +50,10 @@ resumeEntrysRouter.put("/:id", async (request, response, next) => {
   }
 
   try {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if(!decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" })
+    }
     const newResumeEntry = {
       title: body.title,
       subtitle: body.subtitle,
@@ -67,6 +76,10 @@ resumeEntrysRouter.put("/:id", async (request, response, next) => {
 })
 
 resumeEntrysRouter.delete("/:id", async (request, response, next) => {
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if(!decodedToken.id) {
+    return response.status(401).json({ error: "token invalid" })
+  }
   try {
     const foundResumeEntry = await ResumeEntry.findById(request.params.id)
     await ResumeEntry.findByIdAndRemove(request.params.id)

@@ -9,6 +9,22 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
+const tokenExtractor = async (request, response, next) => {
+  const authorization = request.get("authorization")
+  if (authorization) {
+    if (authorization.startsWith("bearer ")) {
+      request.token = authorization.replace("bearer ", "")
+    }
+    if (authorization.startsWith("Bearer ")) {
+      request.token = authorization.replace("Bearer ", "")
+    }
+  }
+  else {
+    request.token = null
+  }
+  next()
+}
+
 const subdomain = (reqest, response, next) => {
     if (reqest.hostname.match(/post\./g)) {
         response.sendFile
@@ -20,7 +36,7 @@ const unknownEndpoint = (request, response, next) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message)
+  //logger.error(error.message)
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" })
@@ -37,5 +53,6 @@ module.exports = {
   requestLogger,
   subdomain,
   unknownEndpoint,
+  tokenExtractor,
   errorHandler
 }

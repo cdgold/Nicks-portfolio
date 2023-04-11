@@ -31,9 +31,6 @@ const StyledLink = styled(Link)`
   color: white;
   text-decoration: none;
   padding-right: 20px;
-  &:hover,
-  &:focus {
-  }
 
   &:hover {
     transform: translateY(-1px);

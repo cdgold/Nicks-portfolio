@@ -27,6 +27,10 @@ projectsRouter.post("/", async (request, response, next) => {
   }
 
   try {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if(!decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" })
+    }
     const project = new Project({ ...body })
     const savedproject = await project.save()
     response.json(savedproject)
@@ -52,6 +56,10 @@ projectsRouter.put("/:id", async (request, response, next) => {
   }
 
   try {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if(!decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" })
+    }
     const newProject = {
       title: body.title,
       description: body.description,
@@ -74,11 +82,17 @@ projectsRouter.put("/:id", async (request, response, next) => {
 
 projectsRouter.delete("/:id", async (request, response, next) => {
   try {
+    console.log("Token is: ", request.token)
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if(!decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" })
+    }
     const foundProject = await Project.findById(request.params.id)
     await Project.findByIdAndRemove(request.params.id)
     return response.status(204).end()
   }
   catch(error) {
+    console.log("Caught error her, it's: ", error)
     next(error)
   }
 })
