@@ -92,7 +92,6 @@ projectsRouter.delete("/:id", async (request, response, next) => {
     return response.status(204).end()
   }
   catch(error) {
-    console.log("Caught error her, it's: ", error)
     next(error)
   }
 })

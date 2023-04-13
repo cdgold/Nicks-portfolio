@@ -49,7 +49,8 @@ const Header = () => {
         <NameImage src={cursive_name} alt="Nick Giotis in cursive"/>
       </Link>
       <StyledLink to="/projects" >{"Projects"}</StyledLink>
-      <StyledLink to="/resume" style={{ paddingRight: "2em" }}>{"Resume"}</StyledLink>
+      <StyledLink to="/resume">{"Resume"}</StyledLink>
+      <StyledLink to="/blogs" style={{ paddingRight: "2em" }}>{"Blogs"}</StyledLink>
     </HeaderStyled>
   )
 }

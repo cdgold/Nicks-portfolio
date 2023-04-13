@@ -4,6 +4,7 @@ import ResumeEntrysEditing from "./editingPageComponents/resumeEntrysEditing"
 import ProjectsEditing from "./editingPageComponents/projectsEditing"
 import resumeEntrysService from "../services/resumeEntrys"
 import projectsService from "../services/projects"
+import styled from "styled-components"
 
 const setTokens = (token) => {
   resumeEntrysService.setToken(token)
@@ -13,6 +14,19 @@ const setTokens = (token) => {
 const PDFForm = () => {
   return null
 }
+
+const LoginForm = styled.div`
+  display: grid;
+`
+
+const MediumEntry = styled.input`
+width:100%;
+
+-ms-box-sizing:content-box;
+-moz-box-sizing:content-box;
+box-sizing:content-box;
+-webkit-box-sizing:content-box; 
+`
 
 const EditingPage = ({ resumeEntrys, projects }) => {
   const [loggedInUser, setLoggedInUser] = useState(null)
@@ -25,6 +39,12 @@ const EditingPage = ({ resumeEntrys, projects }) => {
     if (loggedUserJSON) {
       setLoggedInUser(JSON.parse(loggedUserJSON))
     }
+    const loggedInUser = {
+      username: "root",
+      name: "ragaraga",
+      token: "asdf"
+    }
+    setLoggedInUser(loggedInUser)
     console.log("Logged in user is: ", loggedInUser)
   }, [])
 
@@ -48,28 +68,30 @@ const EditingPage = ({ resumeEntrys, projects }) => {
   //Returns log in page
   if (loggedInUser === null) {
     return (
-      <div>
-        <h2> Login </h2>
-        <form onSubmit={handleLogin}>
+      <LoginForm>
+        <div style={{ placeSelf: "center" }}>
+          <h2> LOGIN </h2>
+        </div>
+        <form onSubmit={handleLogin} style={{ placeSelf: "center", display: "grid", gridTemplateColumns: "1fr 180px", gridTemplateRows: "1fr 1fr 1fr" }}>
           <div>
           username:
-            <input
-              type="text"
-              name="username"
-              id="usernameField"
-            />
           </div>
+          <MediumEntry
+            type="text"
+            name="username"
+            id="usernameField"
+          />
           <div>
-            password:
-            <input
-              type="text"
-              name="password"
-              id="passwordField"
-            />
+          password:
           </div>
+          <MediumEntry
+            type="password"
+            name="password"
+            id="passwordField"
+          />
           <button type="submit"> submit </button>
         </form>
-      </div>
+      </LoginForm>
     )
   }
   else {        // loggedInUser exists

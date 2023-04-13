@@ -9,7 +9,10 @@ const ResumeEntryDiv = styled.div`
   border-width: thin;
   border: solid;
   margin-bottom: 5px;
-  min-width: 800px;
+`
+
+const ResumeEntrysEditingDiv = styled.div`
+  width: 30em;
 `
 
 const ResumeEntry = ({ resumeEntry }) => {
@@ -72,16 +75,16 @@ const ResumeEntrysEditing = ({ resumeEntrys }) => {
 
   if(resumeEntrys !== null){
     return(
-      <div>
+      <ResumeEntrysEditingDiv>
         <ResumeEntryForm submitFunction={handleResumeCreation}/>
         {resumeEntrys.map(entry => <ResumeEntry key={entry.id} resumeEntry={entry}/>)}
-      </div>
+      </ResumeEntrysEditingDiv>
     )
   }
   return(
-    <div>
+    <ResumeEntrysEditingDiv>
       <ResumeEntryForm submitFunction={handleResumeCreation}/>
-    </div>
+    </ResumeEntrysEditingDiv>
   )
 }
 

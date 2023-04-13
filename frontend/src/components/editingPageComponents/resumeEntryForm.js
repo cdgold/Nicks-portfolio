@@ -1,4 +1,16 @@
 import React, { useState, useEffect } from "react"
+import styled from "styled-components"
+
+const ResumeForm = styled.form`
+  display: grid;
+  grid-template-columns: 10em 20em;
+  row-gap: 1px;
+`
+
+const EntryText = styled.label`
+  place-self: center;
+`
+
 
 const ResumeEntryBullet = ({ bullet, index, changeBullet }) => {
   /*const changeBullet = (e) => {
@@ -8,7 +20,13 @@ const ResumeEntryBullet = ({ bullet, index, changeBullet }) => {
   }
   */
   return(
-    <input name={`bullet${index}`} value={bullet} type="text" onChange={event => changeBullet(index, event)}/>
+    <div>
+      <input style={{ width: "70%" }}
+        name={`bullet${index}`}
+        value={bullet}
+        type="text"
+        onChange={event => changeBullet(index, event)}/>
+    </div>
   )
 }
 
@@ -94,61 +112,83 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
   }
 
   return(
-    <form onSubmit={handleSubmit}>
-      <div> {"Entry category:"}
-        <label><input type="radio" name="category" value="education" defaultChecked={(category === "education") ? true : false}
-          onChange={event => handleCategoryChange(event)} /> Education </label>
-        <label><input type="radio" name="category" value="skill" defaultChecked={(category === "skill") ? true : false}
-          onChange={event => handleCategoryChange(event)} /> Skill </label>
-        <label><input type="radio" name="category" value="job" defaultChecked={(category === "job") ? true : false}
+    <ResumeForm onSubmit={handleSubmit}>
+      <EntryText style={{ gridColumn: 1, gridRow: 1 }}>
+        {"Entry category:"}
+      </EntryText>
+      <label style={{ gridColumn: 2, gridRow: 1 }}><input
+        type="radio"
+        name="category"
+        value="education"
+        defaultChecked={(category === "education") ? true : false}
+        onChange={event => handleCategoryChange(event)} /> Education </label>
+      <label style={{ gridColumn: 2, gridRow: 2 }}><input
+        type="radio"
+        name="category"
+        value="skill"
+        defaultChecked={(category === "skill") ? true : false}
+        style={{ gridColumn: 2, gridRow: 2 }}
+        onChange={event => handleCategoryChange(event)} /> Skill </label>
+      <label style={{ gridColumn: 2, gridRow: 3 }}>
+        <input type="radio"
+          name="category"
+          value="job"
+          defaultChecked={(category === "job") ? true : false}
+          style={{ gridColumn: 2, gridRow: 3 }}
           onChange={event => handleCategoryChange(event)}/> Job </label>
-      </div>
-      <label> {"Title for entry:"}
-        <input
-          name="title"
-          type="text"
-          onChange={event => setTitle(event.target.value)}
-          value={title}
-        >
-        </input>
-      </label>
-      <label> {"Subtitle for entry:"}
-        <input
-          name="subtitle"
-          type="text"
-          onChange={event => setSubtitle(event.target.value)}
-          value={subtitle}
-          disabled = {(category === "skill") ? "disabled" : ""}
-        >
-        </input>
-      </label>
-      <label> {"Start date:"}
-        <input
-          name="startDate"
-          type="text"
-          onChange={event => setStartDate(event.target.value)}
-          value={startDate}
-          disabled = {(category === "skill") ? "disabled" : ""}
-        >
-        </input>
-      </label>
-      <label> {"End date:"}
-        <input
-          name="endDate"
-          type="text"
-          onChange={event => setEndDate(event.target.value)}
-          value={endDate}
-          disabled = {(category === "skill") ? "disabled" : ""}
-        >
-        </input>
-      </label>
+      <EntryText style={{ gridColumn: 1, gridRow: 4 }}> {"Title for entry:"} </EntryText>
+      <div style={{ gridColumn: 1, gridRow: 2 }}></div>
+      <div style={{ gridColumn: 1, gridRow: 3 }}></div>  {/* stops bullets from populating empty spaces */}
+      <input
+        name="title"
+        type="text"
+        onChange={event => setTitle(event.target.value)}
+        value={title}
+        style={{ gridColumn: 2, gridRow: 4 }}
+      >
+      </input>
+      <EntryText style={{ gridColumn: 1, gridRow: 5 }}> {`Subtitle for entry:`} </EntryText>
+      <input
+        name="subtitle"
+        type="text"
+        style={{ gridColumn: 2, gridRow: 5 }}
+        onChange={event => setSubtitle(event.target.value)}
+        value={subtitle}
+        disabled = {(category === "skill") ? "disabled" : ""}
+      >
+      </input>
+      <EntryText style={{ gridColumn: 1, gridRow: 6 }}> {"Start date:"} </EntryText>
+      <input
+        name="startDate"
+        type="text"
+        style={{ gridColumn: 2, gridRow: 6 }}
+        onChange={event => setStartDate(event.target.value)}
+        value={startDate}
+        disabled = {(category === "skill") ? "disabled" : ""}
+      >
+      </input>
+      <EntryText style={{ gridColumn: 1, gridRow: 7 }}> {"End date:"} </EntryText>
+      <input
+        name="endDate"
+        type="text"
+        onChange={event => setEndDate(event.target.value)}
+        value={endDate}
+        style={{ gridColumn: 2, gridRow: 7 }}
+        disabled = {(category === "skill") ? "disabled" : ""}
+      >
+      </input>
       {bullets.map((bullet, index) => {
-        return(<ResumeEntryBullet bullet={bullet} key={index} index={index} changeBullet={changeBullet}/>)
+        return(<div style={{ textAlign: "right", gridColumn: 1, gridRow: 8+index }} key={index}> &bull; </div>)
       })}
-      <button type="button" onClick={() => increaseBullets()} disabled={(bullets.length === 7) ? true : false } > Add bullet </button>
-      <button type="button" onClick={() => decreaseBullets()} disabled={(bullets.length === 0) ? true : false } > Subtract bullet </button>
-      <button type="submit" > submit </button>
-    </form>
+      {bullets.map((bullet, index) => {
+        return(<ResumeEntryBullet style={{ gridColumn: 2, gridRow: 8+index, width: "100%" }} bullet={bullet} key={index} index={index} changeBullet={changeBullet}/>)
+      })}
+      <div style={{ gridColumn: 2, gridRow: 8+bullets.length }}>
+        <button type="button" onClick={() => increaseBullets()} disabled={(bullets.length === 7) ? true : false } > Add bullet </button>
+        <button type="button" onClick={() => decreaseBullets()} disabled={(bullets.length === 0) ? true : false } > Subtract bullet </button>
+      </div>
+      <button type="submit" style={{ gridColumn: 2, gridRow: 9+bullets.length }} > submit </button>
+    </ResumeForm>
   )
 }
 
