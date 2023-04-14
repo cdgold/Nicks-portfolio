@@ -61,7 +61,7 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
         setBullets([""])
       }
       else {
-        setBullets([resumeEntry.bullets])
+        setBullets(resumeEntry.bullets)
       }
     }
   }, [resumeEntry])
@@ -70,7 +70,7 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
     setCategory(event.target.value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     try {
       event.preventDefault()
       if (title === "") {
@@ -120,20 +120,20 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
         type="radio"
         name="category"
         value="education"
-        defaultChecked={(category === "education") ? true : false}
+        checked={category === "education"}
         onChange={event => handleCategoryChange(event)} /> Education </label>
       <label style={{ gridColumn: 2, gridRow: 2 }}><input
         type="radio"
         name="category"
         value="skill"
-        defaultChecked={(category === "skill") ? true : false}
+        checked={category === "skill"}
         style={{ gridColumn: 2, gridRow: 2 }}
         onChange={event => handleCategoryChange(event)} /> Skill </label>
       <label style={{ gridColumn: 2, gridRow: 3 }}>
         <input type="radio"
           name="category"
           value="job"
-          defaultChecked={(category === "job") ? true : false}
+          checked={category === "job"}
           style={{ gridColumn: 2, gridRow: 3 }}
           onChange={event => handleCategoryChange(event)}/> Job </label>
       <EntryText style={{ gridColumn: 1, gridRow: 4 }}> {"Title for entry:"} </EntryText>

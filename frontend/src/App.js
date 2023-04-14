@@ -13,7 +13,7 @@ import {
 } from "react-router-dom"
 
 // <content="width=device-width, initial-scale=1"> ?
-
+/*
 const exampleResumeEntrys = [
   {
     title: "Georgetown University",
@@ -141,7 +141,7 @@ const exampleProjects = [{
   writtenOnDate: "September 2020",
   id: "2" }
 ]
-
+*/
 const RoutesDiv = styled.div`
   margin-top: 4rem;
 `
@@ -166,8 +166,8 @@ const App = () => {
       .catch(error => {
         console.error("Error fetching projects service: ", error)
       })
-    setResumeEntrys(exampleResumeEntrys)
-    setProjects(exampleProjects)
+    //setResumeEntrys(exampleResumeEntrys)
+    //setProjects(exampleProjects)
   }, [])
 
   // checks for subdomain "edit" to return proper page

@@ -9,10 +9,12 @@ const ResumeEntryDiv = styled.div`
   border-width: thin;
   border: solid;
   margin-bottom: 5px;
+  padding-right: 20px;
 `
 
 const ResumeEntrysEditingDiv = styled.div`
   width: 30em;
+  margin-left: 10px;
 `
 
 const ResumeEntry = ({ resumeEntry }) => {

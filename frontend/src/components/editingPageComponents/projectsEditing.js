@@ -12,6 +12,11 @@ import styled from "styled-components"
   writtenOnDate: Date
   */
 
+
+const ProjectsEditingDiv = styled.div`
+  width: 30em;
+`
+
 const ProjectDiv = styled.div`
   border-width: thin;
   border: solid;
@@ -21,9 +26,9 @@ const ProjectDiv = styled.div`
 const Project = ({ project }) => {
   const [editMode, setEditMode] = useState(false)
 
-  const reviseProject = (newProject) => {
+  const reviseProject = async (newProject) => {
     newProject = { ...newProject, id:project.id }
-    projectsService.putProject(newProject)
+    return await projectsService.putProject(newProject)
   }
 
   const deleteProject = () => {
@@ -54,7 +59,7 @@ const Project = ({ project }) => {
     return(
       <ProjectDiv>
         <ProjectForm project={project} submitFunction={reviseProject} />
-        <button onClick={() => setEditMode(!editMode)}> stop editing this project </button>
+        <button onClick={() => setEditMode(!editMode)}> stop editing and discard changes </button>
       </ProjectDiv>
     )
   }
@@ -64,9 +69,11 @@ const Project = ({ project }) => {
 const ProjectsEditing = ({ projects }) => {
   //projects = sampleProjects
 
-  const handleProjectCreation= (newProject) => {
+  const handleProjectCreation= async (newProject) => {
     try{
-      projectsService.postProject(newProject)
+      const postResponse = await projectsService.postProject(newProject)
+      console.log("Postresponse is: ", postResponse)
+      return postResponse
     }
     catch (error){
       throw(error)
@@ -74,16 +81,16 @@ const ProjectsEditing = ({ projects }) => {
   }
   if(projects !== null){
     return(
-      <div>
+      <ProjectsEditingDiv>
         <ProjectForm submitFunction={handleProjectCreation}/>
         {projects.map(project => <Project key={project.id} project={project}/>)}
-      </div>
+      </ProjectsEditingDiv>
     )
   }
   return(
-    <div>
+    <ProjectsEditingDiv>
       <ProjectForm submitFunction={handleProjectCreation}/>
-    </div>
+    </ProjectsEditingDiv>
   )
 }
 
