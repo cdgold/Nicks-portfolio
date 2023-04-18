@@ -4,16 +4,18 @@ import Home from "./components/home.js"
 import Footer from "./components/footer.js"
 import Resume from "./components/resume.js"
 import Projects from "./components/projects.js"
+import Blogs from "./components/blogs.js"
+import Blog from "./components/blog.js"
 import EditingPage from "./components/editingPage.js"
 import resumeEntrysService from "./services/resumeEntrys"
 import projectsService from "./services/projects"
 import styled from "styled-components"
 import {
-  Routes, Route
+  Routes, Route, useMatch
 } from "react-router-dom"
 
 // <content="width=device-width, initial-scale=1"> ?
-/*
+
 const exampleResumeEntrys = [
   {
     title: "Georgetown University",
@@ -25,63 +27,71 @@ const exampleResumeEntrys = [
       "DBMOAF winner",
       "Water Polo captain"
     ],
-    id: "01i4keldmsm"
+    id: "0ikol3e"
   },
   {
-    title: "Connecticut High",
+    title: "Georgetown University",
+    subtitle: "B.A. in Economics",
+    category: "job",
+    startDate: "8/1/2019",
+    endDate: "5/1/2023",
+    bullets: [
+      "DBMOAF winner",
+      "Water Polo captain"
+    ],
+    id: "022kop3rlmed"
+  },
+  {
+    title: "Georgetown University",
+    category: "skill",
+    startDate: "8/1/2019",
+    endDate: "5/1/2023",
+    bullets: [
+      "DBMOAF winner",
+      "Water Polo captain"
+    ],
+    id: "apojsdf"
+  },
+  {
+    title: "Georgetown University",
+    subtitle: "B.A. in Economics",
     category: "education",
-    startDate: "8/1/2015",
-    endDate: "5/1/2029",
+    startDate: "8/1/2019",
+    endDate: "5/1/2023",
     bullets: [
-      "Swimming Nationals Finalist"
+      "DBMOAF winner",
+      "Water Polo captain"
     ],
-    id: "092j3omrkwle"
+    id: "0ikolasodijfkl3e"
   },
   {
-    title: "Boston Consulting Group",
-    subtitle: "Summer Intern",
+    title: "Georgetown University",
+    subtitle: "B.A. in Economics",
     category: "job",
-    startDate: "5/1/2022",
-    endDate: "7/1/2022",
+    startDate: "8/1/2019",
+    endDate: "5/1/2023",
     bullets: [
-      "Made the most slide decks",
-      "Ate lots of cheese",
-      "Got on airplane to texas",
-      "Money $20,391 money money wooga"
+      "DBMOAF winner",
+      "Water Polo captain"
     ],
-    id: "092j3ewd"
+    id: "022koppowakfe3rlmed"
   },
   {
-    title: "Lorem ipsum",
-    subtitle: "winter intern",
-    category: "job",
-    startDate: "10/1/2022",
-    endDate: "12/1/2022",
+    title: "Georgetown University",
+    category: "skill",
+    startDate: "8/1/2019",
+    endDate: "5/1/2023",
     bullets: [
-      "Made the most slide decks",
-      "Ate lots of cheese",
-      "Got on airplane to texas",
-      "Money $25,391 money money wooga",
-      "An extra bullet for contrast"
+      "DBMOAF winner",
+      "Water Polo captain"
     ],
-    id: "09jaiofdkm"
+    id: "apoasdfsdf"
   },
   {
-    title: "proficient in powerpoint",
-    category: "skill",
-    id: "09j24oqpmwfkle"
-  },
-  {
-    title: "can speak espanol",
-    subtitle: "4th level by Congressional Standards",
-    category: "skill",
-    id: "0pkolc"
-  },
-  {
-    title: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=sharing",
+    title: "waopgmsd.org",
     category: "pdf",
-    id: "0i23krowe"
-  }
+    id: "apojsdf"
+  },
 ]
 
 const exampleProjects = [{
@@ -91,7 +101,7 @@ const exampleProjects = [{
   fileURL: "https://www.youtube.com/embed/2TVXi_9Bvlg",
   fileType: "video",
   writtenOnDate: "December 2020",
-  id: "1"
+  id: "afsojpdml"
 },
 { title: "Donn B. Murphy One Act Play",
   description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
@@ -108,7 +118,7 @@ const exampleProjects = [{
   fileURL: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/preview",
   fileType: "PDF",
   writtenOnDate: "September 2020",
-  id: "2" },
+  id: "askfdoplm" },
 { title: "Donn B. Murphy One Act Play",
   description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
     and director Billy Morrisette said he got the idea for the script while working at his local Dairy
@@ -124,7 +134,7 @@ const exampleProjects = [{
   fileURL: "https://drive.google.com/file/d/1Nxaf-Zvu1etn-ZLlZUddwhqOPz9UuESG/preview",
   fileType: "image",
   writtenOnDate: "September 2020",
-  id: "2" },
+  id: "zxpocvml" },
 { title: "Donn B. Murphy One Act Play",
   description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
     and director Billy Morrisette said he got the idea for the script while working at his local Dairy
@@ -139,9 +149,18 @@ const exampleProjects = [{
     translation of the tragic source material nor as a meaningful satirical take.`,
   fileType: "none",
   writtenOnDate: "September 2020",
-  id: "2" }
+  id: "qweorjlm" }
 ]
-*/
+
+const exampleBlogs = [
+  {
+    title: "Ullamco nulla reprehenderit deserunt pariatur aute irure.",
+    writtenOnDate: new Date("2023-05-01T00:00:00.000Z"),
+    body: "Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor tempor occaecat.",
+    id: "09j32oe"
+  }
+]
+
 const RoutesDiv = styled.div`
   margin-top: 4rem;
 `
@@ -150,6 +169,7 @@ const App = () => {
 
   const [resumeEntrys, setResumeEntrys] = useState([])
   const [projects, setProjects] = useState([])
+  const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
     resumeEntrysService.getAll()
@@ -166,11 +186,19 @@ const App = () => {
       .catch(error => {
         console.error("Error fetching projects service: ", error)
       })
-    //setResumeEntrys(exampleResumeEntrys)
-    //setProjects(exampleProjects)
+    setResumeEntrys(exampleResumeEntrys)
+    setProjects(exampleProjects)
+    setBlogs(exampleBlogs)
   }, [])
 
-  // checks for subdomain "edit" to return proper page
+  const blogMatch = useMatch("/blogs/:id")
+  const viewedBlog = blogMatch
+    ? blogs.find(blog => blog.id === blogMatch.params.id)
+    : null
+
+  console.log("Viewed blog is: ", viewedBlog)
+
+  // checks for subdomain "edit" to return editing page
   if (window.location.host.split(".")[0] === "edit") {
     return(
       <EditingPage resumeEntrys={resumeEntrys} projects={projects}/>
@@ -193,6 +221,13 @@ const App = () => {
           <Route
             path="/projects"
             element={<Projects projects={projects} />}
+          />
+          <Route
+            path="/blogs"
+            element={<Blogs blogs={blogs} />}
+          />
+          < Route
+            path="blogs/:id" element={<Blog blog={viewedBlog} />}
           />
         </Routes>
       </RoutesDiv>

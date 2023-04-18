@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react"
 import styled, { keyframes } from "styled-components"
 import animations from "../theme/animations"
 
+const SUBTITLE_PERCENT_SIZE = "90"
+const BULLET_PERCENT_SIZE = "85"
+const BASE_NUMBER_OF_EMS_FOR_RESUME_BOX = 3
+
 //import { Document, Page, pdfjs } from "react-pdf"
 //pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -63,6 +67,7 @@ const ResumeBox = styled.div`
   color: white;
   font-family: "Times New Roman", Times, serif;
   font-size: 20px;
+  line-height: 100%;
 `
 
 const StyledEducationBox = styled(ResumeBox)`
@@ -105,7 +110,7 @@ const DisplayBullets = ({ bullets }) => {
     return(
       <ul>
         {bullets.map((bullet, index) => {
-          return(<li key={index} style={{ fontSize: "85%" }}>{bullet}</li>)
+          return(<li key={index} style={{ fontSize: `${BULLET_PERCENT_SIZE}%` }}>{bullet}</li>)
         })}
       </ul>
     )
@@ -120,13 +125,14 @@ const ResumeEntryListing = ({ resumeEntry }) => {
       {resumeEntry.title} <span style={{ float: "right" }}>
         {(resumeEntry.startDate !== undefined && resumeEntry.endDate !== undefined) ? `${resumeEntry.startDate} to ${resumeEntry.endDate}` : null}
       </span><br></br>
-      <i style={{ fontSize: "90%" }}>{resumeEntry.subtitle}</i>
+      <i style={{ fontSize: `${SUBTITLE_PERCENT_SIZE}%` }}>{resumeEntry.subtitle}</i>
       <DisplayBullets bullets={resumeEntry.bullets} />
     </li>
   )
 }
 
 const Resume = ({ resumeEntrys }) => {
+  console.log("resumeEntries is: ", resumeEntrys)
   const calculateGridRowSizes = () => {   //finds appropriate heights for resume categories
     const initialCounts = {
       job: 0,
@@ -138,31 +144,37 @@ const Resume = ({ resumeEntrys }) => {
       if (entry.category === "education"){
         counts.education = counts.education + 1
         if (entry.bullets !== undefined){
-          counts.education = counts.education + entry.bullets.length
+          counts.education = counts.education + (entry.bullets.length * `.${BULLET_PERCENT_SIZE}`)
+        }
+        if (entry.subtitle !== undefined){
+          counts.education = counts.education + (1 * `.${SUBTITLE_PERCENT_SIZE}`)
         }
       }
       if (entry.category === "skill"){
         counts.skill = counts.skill + 1
         if (entry.bullets !== undefined){
-          counts.skill = counts.skill + entry.bullets.length
+          counts.skill = counts.skill + (entry.bullets.length * `.${BULLET_PERCENT_SIZE}`)
         }
       }
       if (entry.category === "job"){
         counts.job = counts.job + 1
         if (entry.bullets !== undefined){
-          counts.job = counts.job + entry.bullets.length
+          counts.job = counts.job + (entry.bullets.length * `.${BULLET_PERCENT_SIZE}`)
+        }
+        if (entry.subtitle !== undefined){
+          counts.job = counts.job + (1 * `.${SUBTITLE_PERCENT_SIZE}`)
         }
       }
       return counts
     }, initialCounts)
     console.log("Final counts is: ", countsByCategory)
-    const firstRowSize = (countsByCategory.education*1.1) + 4
-    const secondRowSize = (countsByCategory.skill) + 4
-    const thirdRowSize = (countsByCategory.job*1.1) + 4
+    const firstRowSize = (countsByCategory.education * 1.1) + BASE_NUMBER_OF_EMS_FOR_RESUME_BOX
+    const secondRowSize = (countsByCategory.skill * 1.1) + BASE_NUMBER_OF_EMS_FOR_RESUME_BOX
+    const thirdRowSize = (countsByCategory.job * 1.1) + BASE_NUMBER_OF_EMS_FOR_RESUME_BOX
     return `${firstRowSize}em 1em ${secondRowSize}em 1em ${thirdRowSize}em`
   }
 
-  if( resumeEntrys !== [] ) {
+  if( resumeEntrys !== [] && resumeEntrys.find(entry => entry.category === "pdf").title !== undefined) {
     return(
       <div>
         <StyledGrid style={{ gridTemplateRows: calculateGridRowSizes() }}>
@@ -179,7 +191,7 @@ const Resume = ({ resumeEntrys }) => {
             </StyledList>
           </StyledEducationBox>
           <StyledSkillsBox>
-            <h3> skills </h3>
+            <h3 style={{ paddingBottom: "0px", marginBottom: "5px" }}> skills </h3>
             <StyledList>
               {resumeEntrys.map(entry => {
               //console.log("in components/resume, entry is: ", entry)

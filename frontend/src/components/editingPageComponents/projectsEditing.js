@@ -31,8 +31,8 @@ const Project = ({ project }) => {
     return await projectsService.putProject(newProject)
   }
 
-  const deleteProject = () => {
-    projectsService.deleteProject(project)
+  const deleteProject = async () => {
+    return await projectsService.deleteProject(project)
   }
 
   if (editMode === false){

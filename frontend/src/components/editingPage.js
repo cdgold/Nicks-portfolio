@@ -5,6 +5,7 @@ import ProjectsEditing from "./editingPageComponents/projectsEditing"
 import resumeEntrysService from "../services/resumeEntrys"
 import projectsService from "../services/projects"
 import styled from "styled-components"
+import NotificationMessage from "./editingPageComponents/notificationMessage"
 
 const setTokens = (token) => {
   resumeEntrysService.setToken(token)
@@ -64,6 +65,7 @@ const EditingPage = ({ resumeEntrys, projects }) => {
     catch (exception) {
       //console.error("In editingPage during login, exception thrown: ", exception)
       setErrorNotification("Issue with login")
+      setTimeout(() => setErrorNotification(""), 5000)
     }
   }
 
@@ -73,6 +75,7 @@ const EditingPage = ({ resumeEntrys, projects }) => {
       <LoginForm>
         <div style={{ placeSelf: "center" }}>
           <h2> LOGIN </h2>
+          <NotificationMessage style={{ placeSelf: "center" }} message={errorNotification} messageColor={"red"}/>
         </div>
         <form onSubmit={handleLogin} style={{ placeSelf: "center", display: "grid", gridTemplateColumns: "1fr 180px", gridTemplateRows: "1fr 1fr 1fr" }}>
           <div>
@@ -100,6 +103,10 @@ const EditingPage = ({ resumeEntrys, projects }) => {
     return (
       <div>
         <h2> Edit website, {loggedInUser.name} </h2>
+        <div>
+          <h2> Manage blog posts </h2>
+          <ResumeEntrysEditing resumeEntrys={resumeEntrys} user={loggedInUser}/>
+        </div>
         <div>
           <h2> Manage resume entries </h2>
           <ResumeEntrysEditing resumeEntrys={resumeEntrys} user={loggedInUser}/>

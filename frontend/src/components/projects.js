@@ -76,7 +76,7 @@ const ProjectsDiv = styled.div`
 `
 
 const Projects = ({ projects }) => {
-  //projects = sampleProjects
+  console.log("rpojects is: ", projects)
   return(
     <ProjectsDiv>
       {projects.map((project, index)  => {

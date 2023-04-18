@@ -20,14 +20,14 @@ const ResumeEntrysEditingDiv = styled.div`
 const ResumeEntry = ({ resumeEntry }) => {
   const [editMode, setEditMode] = useState(false)
 
-  const reviseResumeEntry = (newResumeEntry) => {
+  const reviseResumeEntry = async (newResumeEntry) => {
     newResumeEntry = { ...newResumeEntry, id:resumeEntry.id }
-    resumeEntrysService.putEntry(newResumeEntry)
+    return await resumeEntrysService.putEntry(newResumeEntry)
   }
 
-  const deleteResumeEntry = () => {
+  const deleteResumeEntry = async () => {
     console.log("resumeEntry is:", resumeEntry)
-    resumeEntrysService.deleteEntry(resumeEntry)
+    return await resumeEntrysService.deleteEntry(resumeEntry)
   }
 
   if (editMode === false){
@@ -66,9 +66,9 @@ const ResumeEntrysEditing = ({ resumeEntrys }) => {
   //resumeEntrys = exampleResumeEntrys
   console.log("resumeEntrys is: ", resumeEntrys)
 
-  const handleResumeCreation= (newResume) => {
+  const handleResumeCreation= async (newResume) => {
     try{
-      resumeEntrysService.postProject(newResume)
+      return await resumeEntrysService.postProject(newResume)
     }
     catch (error){
       throw(error)
