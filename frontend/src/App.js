@@ -13,8 +13,76 @@ import styled from "styled-components"
 import {
   Routes, Route, useMatch
 } from "react-router-dom"
+import fonts from "./theme/fonts.css"
 
 // <content="width=device-width, initial-scale=1"> ?
+/*
+  {
+    title: "Georgetown University",
+    subtitle: "B.A. in Economics",
+    category: "job",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
+    bullets: [
+      "DBMOAF winner",
+      "Water Polo captain"
+    ],
+    id: "022kop3rlmed"
+  },
+  {
+    title: "Georgetown University",
+    category: "skill",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
+    bullets: [
+      "DBMOAF winner",
+      "Water Polo captain"
+    ],
+    id: "apojsqowijedf"
+  },
+  {
+    title: "Georgetown University",
+    subtitle: "B.A. in Economics",
+    category: "education",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
+    bullets: [
+      "DBMOAF winner",
+      "Water Polo captain"
+    ],
+    id: "0ikolasodijfkl3e"
+  },
+  {
+    title: "Georgetown University",
+    subtitle: "B.A. in Economics",
+    category: "job",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
+    bullets: [
+      "DBMOAF winner",
+      "Water Polo captain"
+    ],
+    id: "022koppowakfe3rlmed"
+  },
+  {
+    title: "Georgetown University",
+    category: "skill",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
+    bullets: [
+      "DBMOAF winner",
+      "Water Polo captain"
+    ],
+    id: "apoasdfsdf"
+  },
+  {
+    title: "waopgmsd.org",
+    category: "pdf",
+    id: "apojsdf"
+  },
+  */
+
+const dateExample = new Date("2023-05-01T00:00:00.000Z")
 
 const exampleResumeEntrys = [
   {
@@ -30,37 +98,50 @@ const exampleResumeEntrys = [
     id: "0ikol3e"
   },
   {
-    title: "Georgetown University",
+    title: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=share_link",
     subtitle: "B.A. in Economics",
-    category: "job",
+    category: "pdf",
     startDate: "8/1/2019",
     endDate: "5/1/2023",
     bullets: [
       "DBMOAF winner",
       "Water Polo captain"
+    ],
+    id: "0iai0jofl3e"
+  },
+  {
+    title: "Georgetown University",
+    subtitle: "B.A. in Economics",
+    category: "job",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
+    bullets: [
+      "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure.",
+      "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure.",
+      "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure."
     ],
     id: "022kop3rlmed"
   },
   {
     title: "Georgetown University",
     category: "skill",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
     bullets: [
-      "DBMOAF winner",
-      "Water Polo captain"
+      "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure.",
+      "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure. "
     ],
-    id: "apojsdf"
+    id: "apojsqowijedf"
   },
   {
     title: "Georgetown University",
     subtitle: "B.A. in Economics",
     category: "education",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
     bullets: [
-      "DBMOAF winner",
-      "Water Polo captain"
+      "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure.",
+      "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure."
     ],
     id: "0ikolasodijfkl3e"
   },
@@ -68,8 +149,8 @@ const exampleResumeEntrys = [
     title: "Georgetown University",
     subtitle: "B.A. in Economics",
     category: "job",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
     bullets: [
       "DBMOAF winner",
       "Water Polo captain"
@@ -79,8 +160,8 @@ const exampleResumeEntrys = [
   {
     title: "Georgetown University",
     category: "skill",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
+    startDate: new Date("08-01-2019"),
+    endDate: new Date("08-01-2019"),
     bullets: [
       "DBMOAF winner",
       "Water Polo captain"
@@ -100,7 +181,7 @@ const exampleProjects = [{
     and believe in yourself.`,
   fileURL: "https://www.youtube.com/embed/2TVXi_9Bvlg",
   fileType: "video",
-  writtenOnDate: "December 2020",
+  writtenOnDate: new Date("08-01-2019"),
   id: "afsojpdml"
 },
 { title: "Donn B. Murphy One Act Play",
@@ -117,7 +198,7 @@ const exampleProjects = [{
     translation of the tragic source material nor as a meaningful satirical take.`,
   fileURL: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/preview",
   fileType: "PDF",
-  writtenOnDate: "September 2020",
+  writtenOnDate: new Date("08-01-2020"),
   id: "askfdoplm" },
 { title: "Donn B. Murphy One Act Play",
   description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
@@ -133,7 +214,7 @@ const exampleProjects = [{
     translation of the tragic source material nor as a meaningful satirical take.`,
   fileURL: "https://drive.google.com/file/d/1Nxaf-Zvu1etn-ZLlZUddwhqOPz9UuESG/preview",
   fileType: "image",
-  writtenOnDate: "September 2020",
+  writtenOnDate: new Date("08-01-2022"),
   id: "zxpocvml" },
 { title: "Donn B. Murphy One Act Play",
   description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
@@ -148,14 +229,14 @@ const exampleProjects = [{
     beyond the surface level of the play. This leaves the film as neither a compelling modern day
     translation of the tragic source material nor as a meaningful satirical take.`,
   fileType: "none",
-  writtenOnDate: "September 2020",
+  writtenOnDate: new Date("08-01-2018"),
   id: "qweorjlm" }
 ]
 
 const exampleBlogs = [
   {
     title: "Ullamco nulla reprehenderit deserunt pariatur aute irure.",
-    writtenOnDate: new Date("2023-05-01T00:00:00.000Z"),
+    writtenOnDate: dateExample,
     body: "Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor tempor occaecat.",
     id: "09j32oe"
   }
@@ -201,7 +282,7 @@ const App = () => {
   // checks for subdomain "edit" to return editing page
   if (window.location.host.split(".")[0] === "edit") {
     return(
-      <EditingPage resumeEntrys={resumeEntrys} projects={projects}/>
+      <EditingPage resumeEntrys={resumeEntrys} projects={projects} blogs={blogs}/>
     )
   }
   // else, default landing page

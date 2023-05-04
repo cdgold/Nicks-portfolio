@@ -32,26 +32,21 @@ const deleteEntry = async (resumeEntry) => {
 }
 
 const putEntry = async (newEntry) => {
-  try{
-    const config = {
-      headers: { Authorization: token },
-    }
-    const entryToPut = {
-      title: newEntry.title,
-      subtitle: newEntry.subtitle,
-      category: newEntry.category,
-      startDate: newEntry.startDate,
-      endDate: newEntry.endDate,
-      bullets: newEntry.bullets
-    }
-    const putEntryURL = baseUrl + "/" + newEntry.id
-    console.log("Attempting put at ", putEntryURL, " with ", entryToPut)
-    const response = await axios.put(putEntryURL, entryToPut, config)
-    return response.data
+  const config = {
+    headers: { Authorization: token },
   }
-  catch (error) {
-    throw(error)
+  const entryToPut = {
+    title: newEntry.title,
+    subtitle: newEntry.subtitle,
+    category: newEntry.category,
+    startDate: newEntry.startDate,
+    endDate: newEntry.endDate,
+    bullets: newEntry.bullets
   }
+  const putEntryURL = baseUrl + "/" + newEntry.id
+  console.log("Attempting put at ", putEntryURL, " with ", entryToPut)
+  const response = await axios.put(putEntryURL, entryToPut, config)
+  return response.data
 }
 
 export default {

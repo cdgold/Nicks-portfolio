@@ -2,11 +2,20 @@
 import React from "react"
 import { ThemeProvider } from "styled-components"
 
-const theme = {
+const themeProps = {
   colors: {
     primary: "#c88aff",
     secondary: "#9748f7",
     tertiary: "#681de0",
+    quaternary: "#3d038a",
+    primaryLighter: "#d19cff",
+    primaryLightest: "#e1bfff",
+    primaryDarker: "#bd73ff",
+    softBackground: "#fbdeff",
+    hardBackground: "#b861ff",
+    lightGray: "#d6d6d6",
+    darkGray: "#8c8c8c",
+    baseBackground: "#f2f2f2",
     beige: "#FFF8E7",
     eggCream: "#f5f1b5",
     darkCream: "#fff896",
@@ -22,11 +31,11 @@ const theme = {
 }
 
 const Theme = ({ children }) => (
-  <ThemeProvider theme={theme}>
+  <ThemeProvider theme={themeProps}>
     {children}
   </ThemeProvider>
 )
 
 
 
-export default Theme
+export { Theme as default, themeProps }

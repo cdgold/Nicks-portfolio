@@ -80,14 +80,8 @@ resumeEntrysRouter.delete("/:id", async (request, response, next) => {
   if(!decodedToken.id) {
     return response.status(401).json({ error: "token invalid" })
   }
-  try {
-    const foundResumeEntry = await ResumeEntry.findById(request.params.id)
     await ResumeEntry.findByIdAndRemove(request.params.id)
     return response.status(204).end()
-  }
-  catch(error) {
-    next(error)
-  }
 })
 
 module.exports = resumeEntrysRouter

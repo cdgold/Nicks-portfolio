@@ -49,9 +49,12 @@ to{
 `
 
 const StyledGrid = styled.section`
-  padding: 10px;
+  padding-top: 10px;
+  margin-left: 2.5vw;
+  margin-right: 2.5vw;
   display: grid;
-  grid-template-columns: 10% 16% 16% 16% 16% 16% 10%;
+  grid-template-columns: 15% 14% 14% 14% 14% 14% 15%;
+  grid-template-rows: auto-fit, 20em, auto-fit, 5em, auto-fit;
   overflow: hidden;
   width: 95vw;
   min-width: 800px;
@@ -64,14 +67,14 @@ const ResumeBox = styled.div`
   padding-bottom: 0px;
   padding-left: 1em;
   padding-right: 1em;
-  color: white;
-  font-family: "Times New Roman", Times, serif;
+  color: black;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
-  line-height: 100%;
+  line-height: 120%;
 `
 
 const StyledEducationBox = styled(ResumeBox)`
-  background-color: ${props => props.theme.colors.primary};
+  background-color: ${props => props.theme.colors.primaryLightest};
   animation: ${animations.fadeIn}, ${slideInLeft};
   animation-duration: 2s, 2s;
   will-change: transform, opacity;
@@ -86,23 +89,30 @@ const StyledList = styled.ol`
 `
 
 const StyledSkillsBox = styled(ResumeBox)`
-  background-color: ${props => props.theme.colors.secondary};
+  background-color: ${props => props.theme.colors.primaryLighter};
   text-align: left;
   animation: ${animations.fadeIn}, ${slideInRight};
   animation-duration: 3s, 2.5s;
   will-change: transform, opacity;
-  grid-column: 4 / span 4;
-  margin-right: 20px;
-  grid-row: 2 / 5;
+  grid-column: 4 / span 5;
+  grid-row: 3 / 5;
   z-index: 3;
 `
+
+const ResumeHeader = styled.div`
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  margin-bottom: 5px;
+  margin-top: 10px;
+`
+
 const StyledJobsBox = styled(ResumeBox)`
-  background-color: ${props => props.theme.colors.tertiary};
+  background-color: ${props => props.theme.colors.primary};
   animation: ${animations.fadeIn}, ${slideInFromBottom};
   animation-duration: 3.5s, 3s;
   will-change: transform, opacity;
   grid-column: 2 / span 5;
-  grid-row: span 2 / 6;
+  grid-row: span 1 / 6;
   z-index: 2;
 `
 const DisplayBullets = ({ bullets }) => {
@@ -123,11 +133,28 @@ const ResumeEntryListing = ({ resumeEntry }) => {
   return(
     <li>
       {resumeEntry.title} <span style={{ float: "right" }}>
-        {(resumeEntry.startDate !== undefined && resumeEntry.endDate !== undefined) ? `${resumeEntry.startDate} to ${resumeEntry.endDate}` : null}
+        {(resumeEntry.startDate instanceof Date && resumeEntry.endDate instanceof Date) ?
+          `${resumeEntry.startDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.startDate.getFullYear()} 
+          to ${resumeEntry.endDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.endDate.getFullYear()}`
+          : null}
       </span><br></br>
       <i style={{ fontSize: `${SUBTITLE_PERCENT_SIZE}%` }}>{resumeEntry.subtitle}</i>
       <DisplayBullets bullets={resumeEntry.bullets} />
     </li>
+  )
+}
+
+const PDFDisplay = ({ resumeEntrys }) => {
+  const PDFEntry = resumeEntrys.find(entry => entry.category === "pdf")
+  if(PDFEntry !== undefined){
+    return(
+      <div>
+        PDF of resume is available <a href={PDFEntry.title}> here </a> <br></br>
+      </div>
+    )
+  }
+  return(
+    null
   )
 }
 
@@ -174,12 +201,12 @@ const Resume = ({ resumeEntrys }) => {
     return `${firstRowSize}em 1em ${secondRowSize}em 1em ${thirdRowSize}em`
   }
 
-  if( resumeEntrys !== [] && resumeEntrys.find(entry => entry.category === "pdf").title !== undefined) {
+  if( resumeEntrys !== []) {
     return(
       <div>
-        <StyledGrid style={{ gridTemplateRows: calculateGridRowSizes() }}>
+        <StyledGrid style={{ }}>
           <StyledEducationBox>
-            <h3 style={{ paddingBottom: "0px", marginBottom: "5px" }}> education </h3>
+            <ResumeHeader> Education </ResumeHeader>
             <StyledList>
               {resumeEntrys.map(entry => {
               //console.log("in components/resume, entry is: ", entry)
@@ -191,7 +218,7 @@ const Resume = ({ resumeEntrys }) => {
             </StyledList>
           </StyledEducationBox>
           <StyledSkillsBox>
-            <h3 style={{ paddingBottom: "0px", marginBottom: "5px" }}> skills </h3>
+            <ResumeHeader> Skills </ResumeHeader>
             <StyledList>
               {resumeEntrys.map(entry => {
               //console.log("in components/resume, entry is: ", entry)
@@ -203,7 +230,7 @@ const Resume = ({ resumeEntrys }) => {
             </StyledList>
           </StyledSkillsBox>
           <StyledJobsBox>
-            <h3 style={{ paddingBottom: "0px", marginBottom: "5px" }}> work experience </h3>
+            <ResumeHeader> Work Experience </ResumeHeader>
             <StyledList>
               {resumeEntrys.map(entry => {
               //console.log("in components/resume, entry is: ", entry)
@@ -215,7 +242,7 @@ const Resume = ({ resumeEntrys }) => {
             </StyledList>
           </StyledJobsBox>
         </StyledGrid>
-      PDF of resume is available <a href={resumeEntrys.find(entry => entry.category === "pdf").title}> here </a> <br></br>
+        <PDFDisplay resumeEntrys={resumeEntrys}></PDFDisplay>
       </div>
     )
   }

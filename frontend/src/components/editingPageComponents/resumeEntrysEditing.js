@@ -40,9 +40,10 @@ const ResumeEntry = ({ resumeEntry }) => {
             Category of entry: {resumeEntry.category} <br></br>
             Start date: {(resumeEntry.startDate !== undefined) ? resumeEntry.startDate : `No date stored`} <br></br>
             End date: {(resumeEntry.endDate !== undefined) ? resumeEntry.endDate : `No date stored`} <br></br>
-            Bullets: {(resumeEntry.bullets !== undefined) ? resumeEntry.bullets.map((bullet, index) => {
-              return(<li key={index}> {bullet} </li>)
-            }) : `[No bullets]`}
+            Bullets: {
+              (resumeEntry.bullets !== undefined) ? resumeEntry.bullets.map((bullet, index) => {
+                return(<li key={index}> {bullet} </li>)
+              }) : `[No bullets]`}
           </div>
           <button onClick={() => setEditMode(!editMode)}> edit this entry </button>
           <button onClick={() => deleteResumeEntry()}> delete this entry </button>

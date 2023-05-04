@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import loginService from "../services/login"
 import ResumeEntrysEditing from "./editingPageComponents/resumeEntrysEditing"
 import ProjectsEditing from "./editingPageComponents/projectsEditing"
+import BlogsEditing from "./editingPageComponents/blogsEditing"
 import resumeEntrysService from "../services/resumeEntrys"
 import projectsService from "../services/projects"
 import styled from "styled-components"
@@ -29,7 +30,7 @@ box-sizing:content-box;
 -webkit-box-sizing:content-box; 
 `
 
-const EditingPage = ({ resumeEntrys, projects }) => {
+const EditingPage = ({ resumeEntrys, projects, blogs }) => {
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [errorNotification, setErrorNotification] = useState(null)
 
@@ -40,13 +41,13 @@ const EditingPage = ({ resumeEntrys, projects }) => {
     if (loggedUserJSON) {
       setLoggedInUser(JSON.parse(loggedUserJSON))
     }
-    /*
+
     const loggedInUser = {
       username: "root",
       name: "ragaraga",
       token: "asdf"
     }
-    */
+
     setLoggedInUser(loggedInUser)
     console.log("Logged in user is: ", loggedInUser)
   }, [])
@@ -105,7 +106,7 @@ const EditingPage = ({ resumeEntrys, projects }) => {
         <h2> Edit website, {loggedInUser.name} </h2>
         <div>
           <h2> Manage blog posts </h2>
-          <ResumeEntrysEditing resumeEntrys={resumeEntrys} user={loggedInUser}/>
+          <BlogsEditing blogs={blogs} user={loggedInUser}/>
         </div>
         <div>
           <h2> Manage resume entries </h2>

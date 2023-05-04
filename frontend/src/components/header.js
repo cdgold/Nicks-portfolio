@@ -18,6 +18,19 @@ const HeaderStyled = styled.div`
   z-index: 10;
 `
 
+const NameText = styled.div`
+position: absolute;
+left: 0px;
+top: 0px;
+padding-top: .25em;
+padding-left: .5em;
+height: 2em;
+font-size: 28px;
+font-family: 'Montserrat', sans-serif;
+font-weight: 100;
+color: ${props => props.theme.colors.baseBackground};
+`
+
 const NameImage = styled.img`
   position: absolute;
   left: 0px;
@@ -28,9 +41,10 @@ const NameImage = styled.img`
 `
 
 const StyledLink = styled(Link)`
-  color: white;
+font-family: 'Montserrat', sans-serif;
+  color: ${props => props.theme.colors.baseBackground};
   text-decoration: none;
-  padding-right: 20px;
+  padding-right: 18px;
 
   &:hover {
     transform: translateY(-1px);
@@ -46,7 +60,8 @@ const Header = () => {
   return(
     <HeaderStyled>
       <Link to="/" >
-        <NameImage src={cursive_name} alt="Nick Giotis in cursive"/>
+        <NameText>NICK GIOTIS</NameText>
+        {/*<NameImage src={cursive_name} alt="Nick Giotis in cursive"/>*/}
       </Link>
       <StyledLink to="/projects" >{"Projects"}</StyledLink>
       <StyledLink to="/resume">{"Resume"}</StyledLink>

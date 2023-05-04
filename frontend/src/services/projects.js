@@ -21,25 +21,20 @@ const postProject = async (newProject) => {
 }
 
 const putProject = async (newProject) => {
-  try{
-    const config = {
-      headers: { Authorization: token },
-    }
-    const projectToPut = {
-      title: newProject.title,
-      description: newProject.description,
-      fileURL: newProject.fileURL,
-      fileType: newProject.fileType,
-      writtenOnDate: newProject.writtenOnDate
-    }
-    const putProjectURL = baseUrl + "/" + newProject.id
-    console.log("Attempting put at ", putProjectURL, " with ", projectToPut)
-    const response = await axios.put(putProjectURL, projectToPut, config)
-    return response.data
+  const config = {
+    headers: { Authorization: token },
   }
-  catch (error) {
-    throw(error)
+  const projectToPut = {
+    title: newProject.title,
+    description: newProject.description,
+    fileURL: newProject.fileURL,
+    fileType: newProject.fileType,
+    writtenOnDate: newProject.writtenOnDate
   }
+  const putProjectURL = baseUrl + "/" + newProject.id
+  console.log("Attempting put at ", putProjectURL, " with ", projectToPut)
+  const response = await axios.put(putProjectURL, projectToPut, config)
+  return response.data
 }
 
 const deleteProject = async (project) => {

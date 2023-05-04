@@ -10,8 +10,6 @@ const projectSchema = new mongoose.Schema({
   writtenOnDate: Date
 })
 
-// figure out way to upload
-
 projectSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
