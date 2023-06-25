@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
+// need states to lift up states to control message and its color
+
 const MessageDiv = styled.div`
     background: azure;
     border: solid;

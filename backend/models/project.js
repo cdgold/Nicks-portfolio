@@ -9,7 +9,7 @@ const projectSchema = new mongoose.Schema({
   fileType: String,
   writtenOnDate: Date
 })
-
+  
 projectSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
