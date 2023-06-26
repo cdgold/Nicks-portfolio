@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import BlogModal from "./blogModal.js"
 
+const CALENDAR_SHRINK_WIDTH = "850px"
 const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
 const MAX_TITLE_LENGTH = 60
 
@@ -12,12 +14,17 @@ const BlogsDiv = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
-  min-width: 800px;
 `
 
 const CalendarContainer = styled.div`
-  display: flex;
+@media (min-width: ${CALENDAR_SHRINK_WIDTH}) {
   width: 800px;
+}
+@media (max-width: ${CALENDAR_SHRINK_WIDTH}) {
+  width: 91vw;
+}
+  display: flex;
+  width: 100%;
   flex-wrap: wrap;
   font-family: "Source Sans Pro", sans-serif;
 `
@@ -30,21 +37,27 @@ const CalendarDayHeader = styled.li`
 `
 
 const CalendarListElement = styled(CalendarDayHeader)`
-background-color: ${props => props.theme.colors.softBackground};
-height: 80px;
-text-align: left;
-box-sizing: border-box;
-border: 1px solid;
-border-color: ${props => props.theme.colors.quaternary};
+  @media (min-width: ${CALENDAR_SHRINK_WIDTH}) {
+    height: 80px;
+  }
+  @media (max-width: ${CALENDAR_SHRINK_WIDTH}) {
+    height: 10vw;
+  }
+  background-color: ${props => props.theme.colors.softBackground};
+  height: 90px;
+  text-align: left;
+  box-sizing: border-box;
+  border: 1px solid;
+  border-color: ${props => props.theme.colors.quaternary};
 `
 
 const ClickableCalendarListElement = styled(CalendarListElement)`
-background-color: ${props => props.theme.colors.hardBackground};
-width: calc(100% / 7);
-&:hover {
-  filter: brightness(60%);
-  cursor: pointer;
-  }
+  background-color: ${props => props.theme.colors.hardBackground};
+  width: calc(100% / 7);
+  &:hover {
+    filter: brightness(60%);
+    cursor: pointer;
+    }
 `
 
 const DayNumberDiv = styled.div`
@@ -58,7 +71,12 @@ const DayNumberDiv = styled.div`
 
 const CalendarDayText = styled.div`
   font-size: 14px;
-  color: white;
+  @media (min-width: ${CALENDAR_SHRINK_WIDTH}) {
+    color: white;
+  }
+  @media (max-width: ${CALENDAR_SHRINK_WIDTH}) {
+    color: rgb(0, 0, 0, 0);
+  }
 `
 
 const CalendarButton = styled.button`
@@ -90,7 +108,12 @@ width: 100%;
 text-align: center;
 `
 
-const CalendarDay = ({ dayNumber, month, isCurrentMonth, blog }) => {
+const ClickableContainer = styled.div`
+  display: inline-block;
+  width: calc(100% / 7);
+`
+
+const CalendarDay = ({ dayNumber, month, isCurrentMonth, blog, handleDayClick }) => {
   let blockStyle = {}
   if(!isCurrentMonth){
     blockStyle = { ...blockStyle, "opacity": "40%" }
@@ -113,7 +136,7 @@ const CalendarDay = ({ dayNumber, month, isCurrentMonth, blog }) => {
   }
 
   return(
-    <Link to={`/blogs/${blog.id}`} style={{ display: "inline-block", textDecoration: "none", width: "calc(100% / 7)" }}>
+    <ClickableContainer onClick={() => handleDayClick({ "blog": blog })} to={`/blogs/${blog.id}`} >
       <ClickableCalendarListElement  style={ { width: "100%" } }>
         <DayNumberDiv>
           {dayNumber}
@@ -122,7 +145,7 @@ const CalendarDay = ({ dayNumber, month, isCurrentMonth, blog }) => {
           {displayTitle}
         </CalendarDayText>
       </ClickableCalendarListElement>
-    </Link>
+    </ClickableContainer>
   )
 }
 
@@ -130,11 +153,14 @@ const Blogs = ({ blogs }) => {
   const [viewedDates, setViewedDates] = useState([])
   const [firstDateOfViewedMonth, setFirstDateOfViewedMonth] = useState(new Date())
   const [blogsInThisMonth, setBlogsInThisMonth] = useState([])
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [viewedBlog, setViewedBlog] = useState(null)
 
   const refreshViewDates = () => {
     const newViewedDates = []
     const firstOfMonth = new Date(firstDateOfViewedMonth.getFullYear(), firstDateOfViewedMonth.getMonth(), 1)
     const lastOfMonth = new Date(firstDateOfViewedMonth.getFullYear(), firstDateOfViewedMonth.getMonth() + 1, 0)
+
     let currentDateItr = new Date(firstOfMonth)
     let prevMonthValues = []
     while (currentDateItr.getDay() !== 0){
@@ -173,6 +199,11 @@ const Blogs = ({ blogs }) => {
     refreshViewDates()
   }
 
+  const handleDayClick = ({ blog }) => {
+    setViewedBlog(blog)
+    setModalIsOpen(true)
+  }
+
   useEffect(() => { // calculating which days to display (viewedDates)
 
     const currentDate = new Date()
@@ -183,12 +214,13 @@ const Blogs = ({ blogs }) => {
 
   return(
     <BlogsDiv>
+      <BlogModal blog={viewedBlog} isOpen={modalIsOpen} setIsOpen={setModalIsOpen} />
       <CalendarContainer>
         <MonthYearText> {firstDateOfViewedMonth.toLocaleString("default", { month: "long" })} {firstDateOfViewedMonth.getFullYear()}</MonthYearText>
         {daysOfWeek.map(day => <CalendarDayHeader key={day}>{day}</CalendarDayHeader>)}
         {viewedDates.map((date, itr) => {
           let isCurrentMonth = true
-          if((itr < 7 && date>25) || (date < 7 && itr>25)){
+          if((itr < 7 && date>24) || (date < 7 && itr>24)){
             isCurrentMonth = false
           }
           let matchedBlog = null
@@ -210,7 +242,7 @@ const Blogs = ({ blogs }) => {
             }
           }
           return(<CalendarDay key={itr} dayNumber={date} isCurrentMonth={isCurrentMonth}
-            blog={matchedBlog} month={firstDateOfViewedMonth.getMonth()} ></CalendarDay>)
+            blog={matchedBlog} month={firstDateOfViewedMonth.getMonth()} handleDayClick={handleDayClick} ></CalendarDay>)
         })}
         <CalendarButton onClick={() => decrementMonth()}> {`<`} </CalendarButton>
         <CalendarButton onClick={() => incrementMonth()}> {`>`} </CalendarButton>

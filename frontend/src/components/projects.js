@@ -169,27 +169,36 @@ const PreviousProjectsDiv = styled.div`
 `
 
 const Projects = ({ projects }) => {
-  let mostRecentProject = projects.reduce((latestProject, currentProject) => {
-    if (latestProject === null || latestProject.writtenOnDate < currentProject.writtenOnDate){
-      return currentProject
-    }
-    return latestProject
-  })
-  return(
-    <ProjectsDiv>
-      <MostRecentProject project={mostRecentProject}></MostRecentProject>
-      <PreviousProjectsText> Previous Projects </PreviousProjectsText>
-      <PreviousProjectsDiv>
-        {projects.map((project, index)  => {
-          if(project === mostRecentProject){
-            return null
-          }
-          else{
-            return(<Project key={project.id} project={project}/>)
-          }
-        })}
-      </PreviousProjectsDiv>
-    </ProjectsDiv>
+  if (Array.isArray(projects) && projects.length > 0){
+    let mostRecentProject = projects.reduce((latestProject, currentProject) => {
+      if (latestProject === null || latestProject.writtenOnDate < currentProject.writtenOnDate){
+        return currentProject
+      }
+      return latestProject
+    })
+  }
+  if (Array.isArray(projects) && projects.length > 0){
+    return(
+      <ProjectsDiv>
+        <MostRecentProject project={mostRecentProject}></MostRecentProject>
+        <PreviousProjectsText> Previous Projects </PreviousProjectsText>
+        <PreviousProjectsDiv>
+          {projects.map((project, index)  => {
+            if(project === mostRecentProject){
+              return null
+            }
+            else{
+              return(<Project key={project.id} project={project}/>)
+            }
+          })}
+        </PreviousProjectsDiv>
+      </ProjectsDiv>
+    )
+  }
+  return (
+    <div>
+          Could not retrieve projects.
+    </div>
   )
 }
 

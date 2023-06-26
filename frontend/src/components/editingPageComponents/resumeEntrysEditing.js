@@ -38,8 +38,8 @@ const ResumeEntry = ({ resumeEntry }) => {
           <div>
             Subtitle of resume entry: {resumeEntry.subtitle} <br></br>
             Category of entry: {resumeEntry.category} <br></br>
-            Start date: {(resumeEntry.startDate !== undefined) ? resumeEntry.startDate : `No date stored`} <br></br>
-            End date: {(resumeEntry.endDate !== undefined) ? resumeEntry.endDate : `No date stored`} <br></br>
+            Start date: {(resumeEntry.startDate !== undefined) ? resumeEntry.startDate.toDateString() : `No date stored`} <br></br>
+            End date: {(resumeEntry.endDate !== undefined) ? resumeEntry.endDate.toDateString() : `No date stored`} <br></br>
             Bullets: {
               (resumeEntry.bullets !== undefined) ? resumeEntry.bullets.map((bullet, index) => {
                 return(<li key={index}> {bullet} </li>)

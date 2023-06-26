@@ -92,8 +92,8 @@ const exampleResumeEntrys = [
     title: "Georgetown University",
     subtitle: "B.A. in Economics",
     category: "education",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
+    startDate: new Date("8/1/2019"),
+    endDate: new Date("5/1/2023"),
     bullets: [
       "DBMOAF winner",
       "Water Polo captain"
@@ -104,8 +104,8 @@ const exampleResumeEntrys = [
     title: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/view?usp=share_link",
     subtitle: "B.A. in Economics",
     category: "pdf",
-    startDate: "8/1/2019",
-    endDate: "5/1/2023",
+    startDate: new Date("8/1/2019"),
+    endDate: new Date("5/1/2023"),
     bullets: [
       "DBMOAF winner",
       "Water Polo captain"
@@ -239,8 +239,24 @@ const exampleProjects = [{
 const exampleBlogs = [
   {
     title: "Ullamco nulla reprehenderit deserunt pariatur aute irure.",
-    writtenOnDate: dateExample,
-    body: "Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor tempor occaecat.",
+    writtenOnDate: new Date("2023-07-01"),
+    body: `Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
+    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
+    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
+    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
+    tempor occaecat.`,
     id: "09j32oe"
   }
 ]
@@ -270,9 +286,14 @@ const App = () => {
       .catch(error => {
         console.error("Error fetching projects service: ", error)
       })
+      /*
     setResumeEntrys(exampleResumeEntrys)
     setProjects(exampleProjects)
     setBlogs(exampleBlogs)
+      */
+    setResumeEntrys([])
+    setProjects([])
+    setBlogs([])
   }, [])
 
   const blogMatch = useMatch("/blogs/:id")

@@ -40,6 +40,7 @@ const ProjectForm = ({ project=null, submitFunction }) => {
     if (title === "") {
       setMessageColor("red")
       setMessage("Projects require a title.")
+      setTimeout(() => setMessage(""), 5000)
       return
     }
     let newProject = {

@@ -60,7 +60,7 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
       else {
         setEndDate(resumeEntry.endDate)
       }
-      if (bullets === [] || bullets === null){
+      if (bullets === null || (Array.isArray(bullets) && bullets.length === 0)){
         setBullets([""])
       }
       else {
@@ -77,7 +77,9 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
     try {
       event.preventDefault()
       if (title === "") {
-        setInputError("Resume entries require a title.")
+        setMessageColor("red")
+        setMessage(`Resume entries require a title.`)
+        setTimeout(() => {setMessage("")}, 5000)
         return
       }
       let formEntry = {

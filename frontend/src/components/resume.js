@@ -274,7 +274,7 @@ const Resume = ({ resumeEntrys }) => {
     )
   }
   else {
-    return ( <div> Loading... </div>)
+    return ( <div> Could not retrieve resume entries. </div>)
   }
 }
 

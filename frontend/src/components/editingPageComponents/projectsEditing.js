@@ -46,7 +46,7 @@ const Project = ({ project }) => {
           <div>
             URL of project file: {project.fileURL} <br></br>
             Kind of project media: {project.fileType} <br></br>
-            Project created on: {project.writtenOnDate} <br></br>
+            Project created on: {project.writtenOnDate.toDateString()} <br></br>
           </div>
           <button onClick={() => setEditMode(!editMode)}> edit this project </button>
           <button onClick={() => deleteProject()}> delete this project </button>

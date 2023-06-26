@@ -41,13 +41,11 @@ const EditingPage = ({ resumeEntrys, projects, blogs }) => {
     if (loggedUserJSON) {
       setLoggedInUser(JSON.parse(loggedUserJSON))
     }
-    /*
     const loggedInUser = {
       username: "root",
       name: "ragaraga",
       token: "asdf"
     }
-    */
     setLoggedInUser(loggedInUser)
     console.log("Logged in user is: ", loggedInUser)
   }, [])
