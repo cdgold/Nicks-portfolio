@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, createContext } from "react"
 import Header from "./components/header.js"
 import Home from "./components/home.js"
 import Footer from "./components/footer.js"
@@ -14,6 +14,9 @@ import {
   Routes, Route, useMatch
 } from "react-router-dom"
 import fonts from "./theme/fonts.css"
+import { useMediaQuery } from "react-responsive"
+
+const MOBILE_VIEW_CUTOFF = 850
 
 // <content="width=device-width, initial-scale=1"> ?
 /*

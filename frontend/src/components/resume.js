@@ -4,7 +4,9 @@ import animations from "../theme/animations"
 
 const SUBTITLE_PERCENT_SIZE = "90"
 const BULLET_PERCENT_SIZE = "85"
-const BASE_NUMBER_OF_EMS_FOR_RESUME_BOX = 3
+
+const DESKTOP_VIEW_CUTOFF = "900px"
+const SHRINK_TEXT_CUTOFF = "500px"
 
 //import { Document, Page, pdfjs } from "react-pdf"
 //pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
@@ -52,16 +54,28 @@ const StyledGrid = styled.section`
   padding-top: 10px;
   margin-left: 2.5vw;
   margin-right: 2.5vw;
-  display: grid;
-  grid-template-columns: 15% 14% 14% 14% 14% 14% 15%;
-  grid-template-rows: auto-fit, 20em, auto-fit, 5em, auto-fit;
-  overflow: hidden;
   width: 95vw;
-  min-width: 800px;
   font-size: 20px;
+  @media (max-width: ${DESKTOP_VIEW_CUTOFF}) {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  @media (min-width: ${DESKTOP_VIEW_CUTOFF}) {
+    display: grid;
+    grid-template-columns: 15% 14% 14% 14% 14% 14% 15%;
+    grid-template-rows: auto-fit, 20em, auto-fit, 5em, auto-fit;
+    overflow: hidden;
+  }
 `
 
 const ResumeBox = styled.div`
+  @media (max-width: ${SHRINK_TEXT_CUTOFF}){
+    font-size: 14px;
+  }
+  @media (min-width: ${SHRINK_TEXT_CUTOFF}){
+    font-size: 20px;
+  }
   border-radius: 5px; 
   padding-top: 0px;
   padding-bottom: 0px;
@@ -69,7 +83,6 @@ const ResumeBox = styled.div`
   padding-right: 1em;
   color: black;
   font-family: "Montserrat", sans-serif;
-  font-size: 20px;
   line-height: 120%;
 `
 
@@ -115,6 +128,19 @@ const StyledJobsBox = styled(ResumeBox)`
   grid-row: span 1 / 6;
   z-index: 2;
 `
+
+const ResumeEntryDate = styled.div`
+  @media (min-width: ${DESKTOP_VIEW_CUTOFF}){
+    float: right;
+  }
+  @media (max-width: ${DESKTOP_VIEW_CUTOFF}){
+    font-style: italic;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-size: 14px;
+  }
+`
+
 const DisplayBullets = ({ bullets }) => {
   if (bullets !== undefined && bullets.length > 0) {
     return(
@@ -129,15 +155,15 @@ const DisplayBullets = ({ bullets }) => {
 }
 
 const ResumeEntryListing = ({ resumeEntry }) => {
-  console.log("Entry is: ", resumeEntry)
   return(
     <li>
-      {resumeEntry.title} <span style={{ float: "right" }}>
+      {resumeEntry.title}
+      <ResumeEntryDate>
         {(resumeEntry.startDate instanceof Date && resumeEntry.endDate instanceof Date) ?
           `${resumeEntry.startDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.startDate.getFullYear()} 
           to ${resumeEntry.endDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.endDate.getFullYear()}`
           : null}
-      </span><br></br>
+      </ResumeEntryDate>
       <i style={{ fontSize: `${SUBTITLE_PERCENT_SIZE}%` }}>{resumeEntry.subtitle}</i>
       <DisplayBullets bullets={resumeEntry.bullets} />
     </li>
@@ -160,6 +186,7 @@ const PDFDisplay = ({ resumeEntrys }) => {
 
 const Resume = ({ resumeEntrys }) => {
   console.log("resumeEntries is: ", resumeEntrys)
+  /*
   const calculateGridRowSizes = () => {   //finds appropriate heights for resume categories
     const initialCounts = {
       job: 0,
@@ -200,8 +227,8 @@ const Resume = ({ resumeEntrys }) => {
     const thirdRowSize = (countsByCategory.job * 1.1) + BASE_NUMBER_OF_EMS_FOR_RESUME_BOX
     return `${firstRowSize}em 1em ${secondRowSize}em 1em ${thirdRowSize}em`
   }
-
-  if( resumeEntrys !== []) {
+*/
+  if(Array.isArray(resumeEntrys) && resumeEntrys.length !== 0) {
     return(
       <div>
         <StyledGrid style={{ }}>

@@ -3,15 +3,25 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import loadingGif from "../assets/loadingAnimations/spinningBalls.gif"
 
-const imageHeight = "400px"
-const imageWidth = "400px"
-const videoHeight = "560px"
-const videoWidth = "315px"
+const MAX_HEIGHT = "300px"
+const MAX_WIDTH = "600px"
+const imageHeight = "50vw"
+const imageWidth = "50vw"
+const videoHeight = "50vw"
+const videoWidth = "28vw"
 const pdfHeight = "480px"
 const pdfWidth = "640px"
 
 const IFrameDiv = styled.div`
-background:url(${loadingGif}) center center no-repeat;
+  background:url(${loadingGif}) center center no-repeat;
+  width: 100%;
+  height: ${props => props.height};
+  width: ${props => props.width};
+  max-height: ${MAX_HEIGHT};
+  max-width: ${MAX_WIDTH};
+  grid-column: 1;
+  text-align: center;
+  place-self: center;
 `
 
 const ImageDiv = styled(IFrameDiv)`
@@ -31,14 +41,14 @@ const PDFDiv = styled(IFrameDiv)`
 
 const MostRecentProjectDiv = styled.div`
   display: grid;
-  grid-template-columns: minmax(5px, 10vw) minmax(650px, 80vw) minmax(5px, 10vw);
+  grid-template-columns: 80vw;
   grid-template-rows: fit-content(50vw) fit-content(50vw) fit-content(50vw) fit-content(50vw);
   place-content: center;
 `
 
 const MostRecentText = styled.div`
   text-align: center;
-  grid-column: 2;
+  grid-column: 1;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 30px;
   font-weight: 400;
@@ -95,8 +105,8 @@ const MostRecentProject = ({ project }) => {
         <MostRecentText>{`MOST RECENT`}</MostRecentText>
         <ProjectTitle>{`${project.title}`}</ProjectTitle>
         <MostRecentDate> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </MostRecentDate>
-        <IFrameDiv style={{ height: IFrameWidth, gridColumn: "2", textAlign: "center", placeContent: "center" }}>
-          <iframe src={project.fileURL} width={IFrameWidth} height={"100%"} allow="autoplay" ></iframe>
+        <IFrameDiv width={IFrameWidth} height={IFrameHeight} >
+          <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay" ></iframe>
         </IFrameDiv>
         <MostRecentDescriptionText> {project.description} </MostRecentDescriptionText>
       </MostRecentProjectDiv>)
@@ -104,8 +114,23 @@ const MostRecentProject = ({ project }) => {
   return null
 }
 
+const ProjectsDiv = styled.div`
+  width: 100%;
+`
+
 const ProjectDiv = styled.div`
-  width: 650px;
+  margin-top: 4rem;
+  margin-left: 1rem;
+  font-family: "Source Sans Pro", sans-serif;
+  @media (min-width: 1000px){
+    width: 30vw;
+  }
+  @media (min-width: 750px) and (max-width: 1000px){
+    width: 45vw;
+  }
+  @media (max-width: 750px){
+    width: 90vw;
+  }
 `
 
 const Project = ({ project }) => {
@@ -121,7 +146,7 @@ const Project = ({ project }) => {
       <h4> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </h4>
       <p> {project.description} </p>
       {(IFrameWidth !== null && IFrameHeight !== null) ?
-        <IFrameDiv style={{ width: IFrameHeight, height: IFrameWidth }}>
+        <IFrameDiv style={{ width: "100%", height: IFrameHeight }}>
           <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay"></iframe>
         </IFrameDiv>
         : null}
@@ -129,15 +154,10 @@ const Project = ({ project }) => {
   )
 }
 
-const ProjectsDiv = styled.div`
-  margin-top: 4rem;
-  margin-left: 1rem;
-  font-family: "Source Sans Pro", sans-serif;
-`
-
 const PreviousProjectsText = styled(MostRecentText)`
   letter-spacing: .2em;
   text-align: left;
+  margin-left: 1rem;
 `
 
 const PreviousProjectsDiv = styled.div`
@@ -163,10 +183,6 @@ const Projects = ({ projects }) => {
         {projects.map((project, index)  => {
           if(project === mostRecentProject){
             return null
-          }
-          if ((projects.length - 1) !== index){
-            console.log(`${projects.length} is length with index ${index}`)
-            return(<div key={project.id}><Project project={project}/> <hr></hr></div>)
           }
           else{
             return(<Project key={project.id} project={project}/>)
