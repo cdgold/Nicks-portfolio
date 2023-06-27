@@ -10,6 +10,7 @@ const usersRouter = require("./controllers/users")
 const projectsRouter = require("./controllers/projects")
 const loginRouter = require("./controllers/login")
 const middleware = require("./utils/middleware")
+const path = require('path')
 const mongoose = require("mongoose")
 
 mongoose.connect(config.MONGODB_URI)
@@ -32,6 +33,11 @@ app.use("/api/login", loginRouter)
 app.use("/api/projects", projectsRouter)
 app.use("/api/resumeEntrys", resumeEntrysRouter)
 app.use("/api/blogs", blogsRouter)
+
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, './build/')})
+})
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 

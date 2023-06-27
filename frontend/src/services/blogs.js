@@ -9,7 +9,15 @@ const setToken = (newToken) => {
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
-  return response.data
+  let returnBlogs = [ ...response.data ]
+  if (Array.isArray(returnBlogs) && returnBlogs.length > 0){
+    returnBlogs.forEach((blog, index, array) => {
+      if(typeof blog.writtenOnDate !== "undefined"){
+        array[index].writtenOnDate = new Date(blog.writtenOnDate)
+      }
+    })
+  }
+  return returnBlogs
 }
 
 const postBlog = async (newBlog) => {

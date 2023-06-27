@@ -6,6 +6,8 @@ const BlogDiv = styled.div`
   margin-left: 1em;
 `
 
+// MODAL ON CLICK?
+
 const Blog = ({ blog }) => {
   console.log(blog)
   return(

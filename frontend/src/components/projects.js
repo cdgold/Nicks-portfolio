@@ -96,7 +96,9 @@ const MostRecentProject = ({ project }) => {
   const [IFrameWidth, setIFrameWidth] = useState(null)
   const [IFrameHeight, setIFrameHeight] = useState(null)
   useEffect(() => {
-    changeIframeDimensions(setIFrameWidth, setIFrameHeight, project.fileType)
+    if(project !== null && typeof project.fileType !== "undefined" && project.fileType !== null){
+      changeIframeDimensions(setIFrameWidth, setIFrameHeight, project.fileType)
+    }
   }, [project])
 
   if(project !== null){
@@ -104,10 +106,14 @@ const MostRecentProject = ({ project }) => {
       <MostRecentProjectDiv>
         <MostRecentText>{`MOST RECENT`}</MostRecentText>
         <ProjectTitle>{`${project.title}`}</ProjectTitle>
-        <MostRecentDate> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </MostRecentDate>
-        <IFrameDiv width={IFrameWidth} height={IFrameHeight} >
-          <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay" ></iframe>
-        </IFrameDiv>
+        {(typeof project.writtenOnDate !== "undefined" && project.writtenOnDate !== null)?
+          <MostRecentDate> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </MostRecentDate>
+          :null}
+        {(IFrameHeight !== null && IFrameWidth !== null)?
+          <IFrameDiv width={IFrameWidth} height={IFrameHeight} >
+            <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay" ></iframe>
+          </IFrameDiv>
+          :null}
         <MostRecentDescriptionText> {project.description} </MostRecentDescriptionText>
       </MostRecentProjectDiv>)
   }
@@ -143,7 +149,9 @@ const Project = ({ project }) => {
   return(
     <ProjectDiv>
       <ProjectTitle> {project.title} </ProjectTitle>
-      <h4> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </h4>
+      {(typeof project.writtenOnDate !== "undefined")?
+        <h4> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </h4>
+        :null}
       <p> {project.description} </p>
       {(IFrameWidth !== null && IFrameHeight !== null) ?
         <IFrameDiv style={{ width: "100%", height: IFrameHeight }}>
@@ -169,14 +177,20 @@ const PreviousProjectsDiv = styled.div`
 `
 
 const Projects = ({ projects }) => {
-  if (Array.isArray(projects) && projects.length > 0){
-    let mostRecentProject = projects.reduce((latestProject, currentProject) => {
-      if (latestProject === null || latestProject.writtenOnDate < currentProject.writtenOnDate){
-        return currentProject
-      }
-      return latestProject
-    })
-  }
+  const [mostRecentProject, setMostRecentProject] = useState(null)
+
+  useEffect(() => {
+    if (projects !== null && (Array.isArray(projects) && projects.length > 0)){
+      let newMostRecentProject = projects.reduce((latestProject, currentProject) => {
+        if (latestProject === null || latestProject.writtenOnDate < currentProject.writtenOnDate){
+          return currentProject
+        }
+        return latestProject
+      }, null)
+      setMostRecentProject(newMostRecentProject)
+    }
+  }, [projects])
+
   if (Array.isArray(projects) && projects.length > 0){
     return(
       <ProjectsDiv>

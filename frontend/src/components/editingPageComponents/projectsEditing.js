@@ -23,16 +23,12 @@ const ProjectDiv = styled.div`
   margin-bottom: 5px;
 `
 
-const Project = ({ project }) => {
+const Project = ({ project, deleteProject }) => {
   const [editMode, setEditMode] = useState(false)
 
   const reviseProject = async (newProject) => {
     newProject = { ...newProject, id:project.id }
     return await projectsService.putProject(newProject)
-  }
-
-  const deleteProject = async () => {
-    return await projectsService.deleteProject(project)
   }
 
   if (editMode === false){
@@ -49,7 +45,7 @@ const Project = ({ project }) => {
             Project created on: {project.writtenOnDate.toDateString()} <br></br>
           </div>
           <button onClick={() => setEditMode(!editMode)}> edit this project </button>
-          <button onClick={() => deleteProject()}> delete this project </button>
+          <button onClick={() => deleteProject(project)}> delete this project </button>
           <br></br>
         </Togglable>
       </ProjectDiv>
@@ -66,8 +62,19 @@ const Project = ({ project }) => {
 
 }
 
-const ProjectsEditing = ({ projects }) => {
+const ProjectsEditing = ({ projects, setProjects }) => {
   //projects = sampleProjects
+
+  const deleteProject = async (project) => {
+    try{
+      await projectsService.deleteProject(project)
+      const newProjects = projects.filter(entry => project.id !== entry.id)
+      setProjects(newProjects)
+    }
+    catch (error) {
+      window.alert("Error while deleting project!")
+    }
+  }
 
   const handleProjectCreation= async (newProject) => {
     try{
@@ -83,7 +90,7 @@ const ProjectsEditing = ({ projects }) => {
     return(
       <ProjectsEditingDiv>
         <ProjectForm submitFunction={handleProjectCreation}/>
-        {projects.map(project => <Project key={project.id} project={project}/>)}
+        {projects.map(project => <Project key={project.id} project={project} deleteProject={deleteProject}/>)}
       </ProjectsEditingDiv>
     )
   }

@@ -18,12 +18,34 @@ resumeEntrysRouter.post("/", async (request, response, next) => {
     return response.status(400).end()
   }
 
+  let startDateToSave = undefined
+  if (typeof body.startDate !== "undefined"){
+    const parsedDate = Date.parse(body.startDate)
+    if(!(isNaN(parsedDate))){
+      startDateToSave = new Date(parsedDate)
+    }
+    else {
+      startDateToSave = undefined
+    }
+  }
+  
+  let endDateToSave = undefined
+  if (typeof body.endDate !== "undefined"){
+    const parsedDate = Date.parse(body.endDate)
+    if(!(isNaN(parsedDate))){
+      endDateToSave = new Date(parsedDate)
+    }
+    else {
+      endDateToSave = undefined
+    }
+  }
+
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     if(!decodedToken.id) {
       return response.status(401).json({ error: "token invalid" })
     }
-    const resumeEntry = new ResumeEntry({ ...body })
+    const resumeEntry = new ResumeEntry({ ...body, "startDate": startDateToSave, "endDate": endDateToSave })
     let oldPdf = null
     if(body.category === "pdf") {
       oldPdf = await ResumeEntry.findOne({ category: "pdf" })
@@ -49,6 +71,28 @@ resumeEntrysRouter.put("/:id", async (request, response, next) => {
     }).end()
   }
 
+  let startDateToSave = undefined
+  if (typeof body.startDate !== "undefined"){
+    const parsedDate = Date.parse(body.startDate)
+    if(!(isNaN(parsedDate))){
+      startDateToSave = new Date(parsedDate)
+    }
+    else {
+      startDateToSave = undefined
+    }
+  }
+  
+  let endDateToSave = undefined
+  if (typeof body.endDate !== "undefined"){
+    const parsedDate = Date.parse(body.endDate)
+    if(!(isNaN(parsedDate))){
+      endDateToSave = new Date(parsedDate)
+    }
+    else {
+      endDateToSave = undefined
+    }
+  }
+
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     if(!decodedToken.id) {
@@ -58,8 +102,8 @@ resumeEntrysRouter.put("/:id", async (request, response, next) => {
       title: body.title,
       subtitle: body.subtitle,
       category: body.category,
-      startDate: body.startDate,
-      endDate: body.endDate,
+      startDate: startDateToSave,
+      endDate: endDateToSave,
       bullets: body.bullets
     }
     const updatedResumeEntry = await ResumeEntry.findByIdAndUpdate(request.params.id, newResumeEntry, { new: true })

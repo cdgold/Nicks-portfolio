@@ -43,6 +43,18 @@ const ProjectForm = ({ project=null, submitFunction }) => {
       setTimeout(() => setMessage(""), 5000)
       return
     }
+    if (writtenOnDate === "") {
+      setMessageColor("red")
+      setMessage("Projects require a date (MM/DD/YYYY).")
+      setTimeout(() => setMessage(""), 5000)
+      return
+    }
+    if (isNaN(Date.parse(writtenOnDate))) {
+      setMessageColor("red")
+      setMessage("Format date as MM/DD/YYYY.")
+      setTimeout(() => setMessage(""), 5000)
+      return
+    }
     let newProject = {
       title: title,
       description: description,

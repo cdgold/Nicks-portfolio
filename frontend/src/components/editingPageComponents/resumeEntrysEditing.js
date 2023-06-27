@@ -4,6 +4,7 @@ import resumeEntrysService from "../../services/resumeEntrys"
 import ResumeEntryForm from "./resumeEntryForm"
 import Togglable from "../../utils/togglable"
 import styled from "styled-components"
+import resumeEntrys from "../../services/resumeEntrys"
 
 const ResumeEntryDiv = styled.div`
   border-width: thin;
@@ -17,17 +18,12 @@ const ResumeEntrysEditingDiv = styled.div`
   margin-left: 10px;
 `
 
-const ResumeEntry = ({ resumeEntry }) => {
+const ResumeEntry = ({ resumeEntry, deleteResumeEntry }) => {
   const [editMode, setEditMode] = useState(false)
 
   const reviseResumeEntry = async (newResumeEntry) => {
     newResumeEntry = { ...newResumeEntry, id:resumeEntry.id }
     return await resumeEntrysService.putEntry(newResumeEntry)
-  }
-
-  const deleteResumeEntry = async () => {
-    console.log("resumeEntry is:", resumeEntry)
-    return await resumeEntrysService.deleteEntry(resumeEntry)
   }
 
   if (editMode === false){
@@ -46,7 +42,7 @@ const ResumeEntry = ({ resumeEntry }) => {
               }) : `[No bullets]`}
           </div>
           <button onClick={() => setEditMode(!editMode)}> edit this entry </button>
-          <button onClick={() => deleteResumeEntry()}> delete this entry </button>
+          <button onClick={() => deleteResumeEntry(resumeEntry)}> delete this entry </button>
           <br></br>
         </Togglable>
       </ResumeEntryDiv>
@@ -63,9 +59,21 @@ const ResumeEntry = ({ resumeEntry }) => {
 
 }
 
-const ResumeEntrysEditing = ({ resumeEntrys }) => {
+const ResumeEntrysEditing = ({ resumeEntrys, setResumeEntrys }) => {
   //resumeEntrys = exampleResumeEntrys
   console.log("resumeEntrys is: ", resumeEntrys)
+
+  const deleteResumeEntry = async (resumeEntry) => {
+    console.log("resumeEntry is:", resumeEntry)
+    try{
+      await resumeEntrysService.deleteEntry(resumeEntry)
+      const newResumeEntrys = resumeEntrys.filter(entry => resumeEntry.id !== entry.id)
+      setResumeEntrys(newResumeEntrys)
+    }
+    catch (error) {
+      window.alert("Error while deleting resume entry!")
+    }
+  }
 
   const handleResumeCreation= async (newResume) => {
     try{
@@ -80,7 +88,7 @@ const ResumeEntrysEditing = ({ resumeEntrys }) => {
     return(
       <ResumeEntrysEditingDiv>
         <ResumeEntryForm submitFunction={handleResumeCreation}/>
-        {resumeEntrys.map(entry => <ResumeEntry key={entry.id} resumeEntry={entry}/>)}
+        {resumeEntrys.map(entry => <ResumeEntry key={entry.id} resumeEntry={entry} deleteResumeEntry={deleteResumeEntry}/>)}
       </ResumeEntrysEditingDiv>
     )
   }

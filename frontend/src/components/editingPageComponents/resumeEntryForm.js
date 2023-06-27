@@ -82,6 +82,22 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
         setTimeout(() => {setMessage("")}, 5000)
         return
       }
+      if (startDate !== ""){
+        if (isNaN(Date.parse(startDate))) {
+          setMessageColor("red")
+          setMessage("Format start date as MM/DD/YYYY.")
+          setTimeout(() => setMessage(""), 5000)
+          return
+        }
+      }
+      if (endDate !== ""){
+        if (isNaN(Date.parse(endDate))) {
+          setMessageColor("red")
+          setMessage("Format end date as MM/DD/YYYY.")
+          setTimeout(() => setMessage(""), 5000)
+          return
+        }
+      }
       let formEntry = {
         title: title,
         subtitle: subtitle,
@@ -174,7 +190,7 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
           disabled = {(category === "skill") ? "disabled" : ""}
         >
         </input>
-        <EntryText style={{ gridColumn: 1, gridRow: 6 }}> {"Start date:"} </EntryText>
+        <EntryText style={{ gridColumn: 1, gridRow: 6 }}> {"Start date: (MM/DD/YYYY)"} </EntryText>
         <input
           name="startDate"
           type="text"
@@ -184,7 +200,7 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
           disabled = {(category === "skill") ? "disabled" : ""}
         >
         </input>
-        <EntryText style={{ gridColumn: 1, gridRow: 7 }}> {"End date:"} </EntryText>
+        <EntryText style={{ gridColumn: 1, gridRow: 7 }}> {"End date: (MM/DD/YYYY)"} </EntryText>
         <input
           name="endDate"
           type="text"

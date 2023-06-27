@@ -17,12 +17,12 @@ const BlogsDiv = styled.div`
 `
 
 const CalendarContainer = styled.div`
-@media (min-width: ${CALENDAR_SHRINK_WIDTH}) {
-  width: 800px;
-}
-@media (max-width: ${CALENDAR_SHRINK_WIDTH}) {
-  width: 91vw;
-}
+  @media (min-width: ${CALENDAR_SHRINK_WIDTH}) {
+    width: 800px;
+  }
+  @media (max-width: ${CALENDAR_SHRINK_WIDTH}) {
+    width: 91vw;
+  }
   display: flex;
   width: 100%;
   flex-wrap: wrap;

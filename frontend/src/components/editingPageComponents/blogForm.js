@@ -38,10 +38,11 @@ const BlogForm = ({ blog=null, submitFunction }) => {
       setMessage("Blogs require a title.")
       return
     }
+    const rightNow = new Date()
     let newBlog = {
       title: title,
       body: body,
-      writtenOnDate: writtenOnDate
+      writtenOnDate: rightNow.toString()
     }
     //console.log("Sending blog: ", newBlog, " off to blogService")
     submitFunction(newBlog)

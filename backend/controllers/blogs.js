@@ -21,13 +21,19 @@ blogsRouter.post("/", async (request, response, next) => {
       error: "blogs require a date"
     }).end()
   }
-
+  const parsedDate = Date.parse(body.writtenOnDate)
+  if(isNaN(parsedDate)){
+    return response.status(400).json({
+      error: "date invalid"
+    }).end()
+  }
+  const dateToSave = new Date(parsedDate)
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     if(!decodedToken.id) {
       return response.status(401).json({ error: "token invalid" })
     }
-    const blog = new Blog({ ...body })
+    const blog = new Blog({ ...body, "writtenOnDate": dateToSave })
     const savedBlog = await blog.save()
     response.json(savedBlog)
   }
@@ -48,16 +54,23 @@ blogsRouter.put("/:id", async (request, response, next) => {
       error: "blogs require a date"
     }).end()
   }
-
+  const parsedDate = Date.parse(body.writtenOnDate)
+  if(isNaN(parsedDate)){
+    return response.status(400).json({
+      error: "date invalid"
+    }).end()
+  }
+  const dateToSave = new Date(parsedDate)
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     if(!decodedToken.id) {
       return response.status(401).json({ error: "token invalid" })
     }
+    
     const newBlog = {
       title: body.title,
       body: body.body,
-      writtenOnDate: body.writtenOnDate
+      writtenOnDate: dateToSave
     }
       const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, { new: true })
       if (updatedBlog == null){

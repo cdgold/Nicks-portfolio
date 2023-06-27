@@ -26,12 +26,23 @@ projectsRouter.post("/", async (request, response, next) => {
     }
   }
 
+  let dateToSave
+  if (typeof body.writtenOnDate !== "undefined"){
+    const parsedDate = Date.parse(body.writtenOnDate)
+    if(!(isNaN(parsedDate))){
+      dateToSave = new Date(parsedDate)
+    }
+    else {
+      dateToSave = undefined
+    }
+  }
+
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     if(!decodedToken.id) {
       return response.status(401).json({ error: "token invalid" })
     }
-    const project = new Project({ ...body })
+    const project = new Project({ ...body, "writtenOnDate": dateToSave })
     const savedproject = await project.save()
     response.json(savedproject)
   }
@@ -55,6 +66,17 @@ projectsRouter.put("/:id", async (request, response, next) => {
     }
   }
 
+  let dateToSave
+  if (typeof body.writtenOnDate !== "undefined"){
+    const parsedDate = Date.parse(body.writtenOnDate)
+    if(!(isNaN(parsedDate))){
+      dateToSave = new Date(parsedDate)
+    }
+    else {
+      dateToSave = undefined
+    }
+  }
+
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     if(!decodedToken.id) {
@@ -65,7 +87,7 @@ projectsRouter.put("/:id", async (request, response, next) => {
       description: body.description,
       fileURL: body.fileURL,
       fileType: body.fileType,
-      writtenOnDate: body.writtenOnDate
+      writtenOnDate: dateToSave
     }
       const updatedProject = await Project.findByIdAndUpdate(request.params.id, newProject, { new: true })
       if (updatedProject == null){

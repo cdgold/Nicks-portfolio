@@ -9,6 +9,7 @@ import Blog from "./components/blog.js"
 import EditingPage from "./components/editingPage.js"
 import resumeEntrysService from "./services/resumeEntrys"
 import projectsService from "./services/projects"
+import blogsService from "./services/blogs"
 import styled from "styled-components"
 import {
   Routes, Route, useMatch
@@ -278,6 +279,7 @@ const App = () => {
       })
       .catch(error => {
         console.error("Error in resume component when fetching: ", error)
+        setResumeEntrys([])
       })
     projectsService.getAll()
       .then(projects => {
@@ -285,15 +287,21 @@ const App = () => {
       })
       .catch(error => {
         console.error("Error fetching projects service: ", error)
+        setProjects([])
+      })
+    blogsService.getAll()
+      .then(blogs => {
+        setBlogs(blogs)
+      })
+      .catch(error => {
+        console.error("Error fetching blogs service: ", error)
+        setBlogs([])
       })
       /*
     setResumeEntrys(exampleResumeEntrys)
     setProjects(exampleProjects)
     setBlogs(exampleBlogs)
       */
-    setResumeEntrys([])
-    setProjects([])
-    setBlogs([])
   }, [])
 
   const blogMatch = useMatch("/blogs/:id")
@@ -303,13 +311,6 @@ const App = () => {
 
   console.log("Viewed blog is: ", viewedBlog)
 
-  // checks for subdomain "edit" to return editing page
-  if (window.location.host.split(".")[0] === "edit") {
-    return(
-      <EditingPage resumeEntrys={resumeEntrys} projects={projects} blogs={blogs}/>
-    )
-  }
-  // else, default landing page
   return(
     <div>
       <Header />
@@ -333,6 +334,16 @@ const App = () => {
           />
           < Route
             path="blogs/:id" element={<Blog blog={viewedBlog} />}
+          />
+          < Route
+            path="/edit" element={<EditingPage
+              resumeEntrys={resumeEntrys}
+              projects={projects}
+              blogs={blogs}
+              setProjects={setProjects}
+              setBlogs={setBlogs}
+              setResumeEntrys={setResumeEntrys}
+            />}
           />
         </Routes>
       </RoutesDiv>

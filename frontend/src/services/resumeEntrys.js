@@ -9,7 +9,19 @@ const setToken = (newToken) => {
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
-  return response.data
+  let returnEntrys = [ ...response.data ]
+  if (Array.isArray(returnEntrys) && returnEntrys.length > 0){
+    returnEntrys.forEach((entry, index, array) => {
+      if(typeof entry.startDate !== "undefined"){
+        array[index].startDate = new Date(entry.startDate)
+      }
+      if(typeof entry.endDate !== "undefined"){
+        array[index].endDate = new Date(entry.endDate)
+      }
+    })
+  }
+
+  return returnEntrys
 }
 
 const postEntry = async ( newEntry ) => {

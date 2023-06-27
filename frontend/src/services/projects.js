@@ -9,7 +9,15 @@ const setToken = (newToken) => {
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
-  return response.data
+  let returnProjects = [ ...response.data ]
+  if (Array.isArray(returnProjects) && returnProjects.length > 0){
+    returnProjects.forEach((project, index, array) => {
+      if(typeof project.writtenOnDate !== "undefined"){
+        array[index].writtenOnDate = new Date(project.writtenOnDate)
+      }
+    })
+  }
+  return returnProjects
 }
 
 const postProject = async (newProject) => {

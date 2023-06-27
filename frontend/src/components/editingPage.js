@@ -5,12 +5,14 @@ import ProjectsEditing from "./editingPageComponents/projectsEditing"
 import BlogsEditing from "./editingPageComponents/blogsEditing"
 import resumeEntrysService from "../services/resumeEntrys"
 import projectsService from "../services/projects"
+import blogsService from "../services/blogs"
 import styled from "styled-components"
 import NotificationMessage from "./editingPageComponents/notificationMessage"
 
 const setTokens = (token) => {
   resumeEntrysService.setToken(token)
   projectsService.setToken(token)
+  blogsService.setToken(token)
 }
 
 const PDFForm = () => {
@@ -30,21 +32,18 @@ box-sizing:content-box;
 -webkit-box-sizing:content-box; 
 `
 
-const EditingPage = ({ resumeEntrys, projects, blogs }) => {
+const EditingPage = ({ resumeEntrys, projects, blogs, setResumeEntrys, setProjects, setBlogs }) => {
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [errorNotification, setErrorNotification] = useState(null)
 
+  console.log("blogs is: ", blogs)
+  console.log("projects is: ", projects)
 
   //Checking if cache of logged in user
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedNickUser")
     if (loggedUserJSON) {
       setLoggedInUser(JSON.parse(loggedUserJSON))
-    }
-    const loggedInUser = {
-      username: "root",
-      name: "ragaraga",
-      token: "asdf"
     }
     setLoggedInUser(loggedInUser)
     console.log("Logged in user is: ", loggedInUser)
@@ -104,15 +103,15 @@ const EditingPage = ({ resumeEntrys, projects, blogs }) => {
         <h2> Edit website, {loggedInUser.name} </h2>
         <div>
           <h2> Manage blog posts </h2>
-          <BlogsEditing blogs={blogs} user={loggedInUser}/>
+          <BlogsEditing blogs={blogs} setBlogs={setBlogs} user={loggedInUser}/>
         </div>
         <div>
           <h2> Manage resume entries </h2>
-          <ResumeEntrysEditing resumeEntrys={resumeEntrys} user={loggedInUser}/>
+          <ResumeEntrysEditing resumeEntrys={resumeEntrys} setResumeEntrys={setResumeEntrys} user={loggedInUser}/>
         </div>
         <div>
           <h2> Manage projects </h2>
-          <ProjectsEditing projects={projects} user={loggedInUser}/>
+          <ProjectsEditing projects={projects} setProjects={setProjects} user={loggedInUser}/>
         </div>
       </div>
     )
