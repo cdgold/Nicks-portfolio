@@ -1,6 +1,6 @@
 import React from "react"
 import nickGivingPresentation from "../assets/images/nick_giving_presentation.jpg"
-import nickPerforming from "../assets/images/nick_performing.jpg"
+import nickBeekeeping from "../assets/images/nick_beekeeping_cropped.png"
 import nickSitting from "../assets/images/nick_sitting_cropped.jpg"
 
 import styled from "styled-components"
@@ -251,12 +251,12 @@ const Home = () => {
         </CentralImageContainer>
         <BiggerImageContainer>
           <ImageLink to="/projects">
-            <BiggerFlankingImage src={nickSitting} alt="Nick sitting on a couch" />
+            <BiggerFlankingImage src={nickBeekeeping} alt="Nick holding a frame of bees" />
           </ImageLink>
         </BiggerImageContainer>
         <SmallerImageContainer>
           <ImageLink to="/blogs">
-            <SmallerFlankingImage src={nickPerforming} alt="Nick performing in a play" />
+            <SmallerFlankingImage src={nickSitting} alt="Nick sitting on a couch" />
           </ImageLink>
         </SmallerImageContainer>
       </ImagesDiv>

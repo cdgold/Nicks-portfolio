@@ -15,9 +15,6 @@ import {
   Routes, Route, useMatch
 } from "react-router-dom"
 import fonts from "./theme/fonts.css"
-import { useMediaQuery } from "react-responsive"
-
-const MOBILE_VIEW_CUTOFF = 850
 
 // <content="width=device-width, initial-scale=1"> ?
 /*
@@ -287,7 +284,8 @@ const App = () => {
       })
       .catch(error => {
         console.error("Error fetching projects service: ", error)
-        setProjects([])
+        //setProjects([])
+        //setProjects(exampleProjects)
       })
     blogsService.getAll()
       .then(blogs => {
@@ -297,11 +295,10 @@ const App = () => {
         console.error("Error fetching blogs service: ", error)
         setBlogs([])
       })
-      /*
-    setResumeEntrys(exampleResumeEntrys)
-    setProjects(exampleProjects)
-    setBlogs(exampleBlogs)
-      */
+
+    //setResumeEntrys(exampleResumeEntrys)
+    //setBlogs(exampleBlogs)
+
   }, [])
 
   const blogMatch = useMatch("/blogs/:id")
@@ -309,7 +306,7 @@ const App = () => {
     ? blogs.find(blog => blog.id === blogMatch.params.id)
     : null
 
-  console.log("Viewed blog is: ", viewedBlog)
+  //console.log("Viewed blog is: ", viewedBlog)
 
   return(
     <div>

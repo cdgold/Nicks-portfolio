@@ -63,7 +63,7 @@ const BlogsEditing = ({ blogs, setBlogs }) => {
 
   const handleBlogCreation= async (newBlog) => {
     try{
-      const postResponse = await blogsService.postBlog({ newBlog })
+      const postResponse = await blogsService.postBlog(newBlog)
       return postResponse
     }
     catch (error){

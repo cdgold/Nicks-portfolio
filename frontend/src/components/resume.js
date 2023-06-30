@@ -164,7 +164,9 @@ const ResumeEntryListing = ({ resumeEntry }) => {
           to ${resumeEntry.endDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.endDate.getFullYear()}`
           : null}
       </ResumeEntryDate>
-      <i style={{ fontSize: `${SUBTITLE_PERCENT_SIZE}%` }}>{resumeEntry.subtitle}</i>
+      <div>
+        <i style={{ fontSize: `${SUBTITLE_PERCENT_SIZE}%` }}>{resumeEntry.subtitle}</i>
+      </div>
       <DisplayBullets bullets={resumeEntry.bullets} />
     </li>
   )

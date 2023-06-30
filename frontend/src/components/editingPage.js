@@ -36,17 +36,18 @@ const EditingPage = ({ resumeEntrys, projects, blogs, setResumeEntrys, setProjec
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [errorNotification, setErrorNotification] = useState(null)
 
+  /*
   console.log("blogs is: ", blogs)
   console.log("projects is: ", projects)
-
+*/
   //Checking if cache of logged in user
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedNickUser")
     if (loggedUserJSON) {
-      setLoggedInUser(JSON.parse(loggedUserJSON))
+      const loggedUser = JSON.parse(loggedUserJSON)
+      setLoggedInUser(loggedUser)
+      setTokens(loggedUser.token)
     }
-    setLoggedInUser(loggedInUser)
-    console.log("Logged in user is: ", loggedInUser)
   }, [])
 
   const handleLogin = async (event) => {

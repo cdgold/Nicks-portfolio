@@ -5,12 +5,12 @@ import loadingGif from "../assets/loadingAnimations/spinningBalls.gif"
 
 const MAX_HEIGHT = "300px"
 const MAX_WIDTH = "600px"
-const imageHeight = "50vw"
+const imageHeight = "90vw"
 const imageWidth = "50vw"
-const videoHeight = "50vw"
+const videoHeight = "90vw"
 const videoWidth = "28vw"
-const pdfHeight = "480px"
-const pdfWidth = "640px"
+const pdfHeight = "50vh"
+const pdfWidth = "90vw"
 
 const IFrameDiv = styled.div`
   background:url(${loadingGif}) center center no-repeat;
@@ -42,7 +42,12 @@ const PDFDiv = styled(IFrameDiv)`
 const MostRecentProjectDiv = styled.div`
   display: grid;
   grid-template-columns: 80vw;
-  grid-template-rows: fit-content(50vw) fit-content(50vw) fit-content(50vw) fit-content(50vw);
+  @media (min-width: 700px){
+    grid-template-rows: fit-content(80vw) fit-content(80vw) fit-content(80vw) fit-content(80vw);
+  }
+  @media (max-width: 700px){
+    grid-template-rows: fit-content(50vw) fit-content(50vw) fit-content(50vw) fit-content(50vw);
+  }
   place-content: center;
 `
 
@@ -110,7 +115,7 @@ const MostRecentProject = ({ project }) => {
           <MostRecentDate> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </MostRecentDate>
           :null}
         {(IFrameHeight !== null && IFrameWidth !== null)?
-          <IFrameDiv width={IFrameWidth} height={IFrameHeight} >
+          <IFrameDiv width={"90%"} height={IFrameHeight} >
             <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay" ></iframe>
           </IFrameDiv>
           :null}
