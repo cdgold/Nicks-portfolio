@@ -115,6 +115,7 @@ const ResumeEntryCreationForm = ({ resumeEntry=null, submitFunction }) => {
           setTimeout(() => {setMessage("")}, 5000)
         })
         .catch((error) => {
+          console.error(error)
           setMessageColor("red")
           setMessage(`Unknown submission error.`)
           setTimeout(() => {setMessage("")}, 5000)

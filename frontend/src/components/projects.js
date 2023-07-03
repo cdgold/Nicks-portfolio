@@ -3,14 +3,11 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import loadingGif from "../assets/loadingAnimations/spinningBalls.gif"
 
-const MAX_HEIGHT = "300px"
+const MAX_HEIGHT = "500px"
 const MAX_WIDTH = "600px"
-const imageHeight = "90vw"
-const imageWidth = "50vw"
-const videoHeight = "90vw"
-const videoWidth = "28vw"
-const pdfHeight = "50vh"
-const pdfWidth = "90vw"
+const imageHeight = "50vh"
+const videoHeight = "50vh"
+const pdfHeight = "70vh"
 
 const IFrameDiv = styled.div`
   background:url(${loadingGif}) center center no-repeat;
@@ -85,15 +82,15 @@ letter-spacing: .1em;
 const changeIframeDimensions = (setIFrameWidth, setIFrameHeight, fileType) => {
   if(fileType === "PDF"){
     setIFrameHeight(pdfHeight)
-    setIFrameWidth(pdfWidth)
+    setIFrameWidth("100%")
   }
   else if(fileType === "image"){
     setIFrameHeight(imageHeight)
-    setIFrameWidth(imageWidth)
+    setIFrameWidth("100%")
   }
   else if(fileType === "video"){
     setIFrameHeight(videoHeight)
-    setIFrameWidth(videoWidth)
+    setIFrameWidth("100%")
   }
 }
 

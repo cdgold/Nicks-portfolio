@@ -77,7 +77,7 @@ const ResumeEntrysEditing = ({ resumeEntrys, setResumeEntrys }) => {
 
   const handleResumeCreation= async (newResume) => {
     try{
-      return await resumeEntrysService.postProject(newResume)
+      return await resumeEntrysService.postEntry(newResume)
     }
     catch (error){
       throw(error)

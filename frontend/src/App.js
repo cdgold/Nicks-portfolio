@@ -81,7 +81,7 @@ import fonts from "./theme/fonts.css"
     category: "pdf",
     id: "apojsdf"
   },
-  */
+
 
 const dateExample = new Date("2023-05-01T00:00:00.000Z")
 
@@ -126,8 +126,6 @@ const exampleResumeEntrys = [
   {
     title: "Georgetown University",
     category: "skill",
-    startDate: new Date("08-01-2019"),
-    endDate: new Date("08-01-2019"),
     bullets: [
       "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure.",
       "Qui incididunt eiusmod elit quis irure. Qui incididunt eiusmod elit quis irure. "
@@ -136,7 +134,6 @@ const exampleResumeEntrys = [
   },
   {
     title: "Georgetown University",
-    subtitle: "B.A. in Economics",
     category: "education",
     startDate: new Date("08-01-2019"),
     endDate: new Date("08-01-2019"),
@@ -238,26 +235,27 @@ const exampleBlogs = [
   {
     title: "Ullamco nulla reprehenderit deserunt pariatur aute irure.",
     writtenOnDate: new Date("2023-07-01"),
-    body: `Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
-    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
-    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
-    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
-    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
-    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
-    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
-    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
-    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
-    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
-    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
-    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
-    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna 
-    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur. 
-    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in. 
-    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor 
+    body: `Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur.
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in.
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor
+    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur.
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in.
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor
+    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur.
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in.
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor
+    tempor occaecat. Anim elit nisi cillum excepteur laboris quis mollit in. Non occaecat aute magna
+    eu velit enim sit anim pariatur. Cillum esse pariatur deserunt aute cillum ex veniam duis excepteur.
+    Incididunt cillum magna occaecat culpa incididunt ad qui esse ullamco exercitation consectetur dolor velit in.
+    Do cupidatat tempor ullamco reprehenderit officia. Pariatur sunt adipisicing esse eu. Qui duis proident labore nisi irure dolor
     tempor occaecat.`,
     id: "09j32oe"
   }
 ]
+*/
 
 const RoutesDiv = styled.div`
   margin-top: 4rem;
@@ -275,16 +273,17 @@ const App = () => {
         setResumeEntrys(entrys)
       })
       .catch(error => {
-        console.error("Error in resume component when fetching: ", error)
+        //console.error("Error in resume component when fetching: ", error)
         setResumeEntrys([])
+        //setResumeEntrys(exampleResumeEntrys)
       })
     projectsService.getAll()
       .then(projects => {
         setProjects(projects)
       })
       .catch(error => {
-        console.error("Error fetching projects service: ", error)
-        //setProjects([])
+        //console.error("Error fetching projects service: ", error)
+        setProjects([])
         //setProjects(exampleProjects)
       })
     blogsService.getAll()
@@ -292,7 +291,7 @@ const App = () => {
         setBlogs(blogs)
       })
       .catch(error => {
-        console.error("Error fetching blogs service: ", error)
+        //console.error("Error fetching blogs service: ", error)
         setBlogs([])
       })
 
@@ -323,7 +322,9 @@ const App = () => {
           />
           <Route
             path="/projects"
-            element={<Projects projects={projects} />}
+            element={<Projects
+              projects={projects}
+            />}
           />
           <Route
             path="/blogs"

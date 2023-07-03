@@ -5,7 +5,7 @@ import animations from "../theme/animations"
 const SUBTITLE_PERCENT_SIZE = "90"
 const BULLET_PERCENT_SIZE = "85"
 
-const DESKTOP_VIEW_CUTOFF = "900px"
+const DESKTOP_VIEW_CUTOFF = "950px"
 const SHRINK_TEXT_CUTOFF = "500px"
 
 //import { Document, Page, pdfjs } from "react-pdf"
@@ -131,13 +131,22 @@ const StyledJobsBox = styled(ResumeBox)`
 
 const ResumeEntryDate = styled.div`
   @media (min-width: ${DESKTOP_VIEW_CUTOFF}){
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 18px;
   }
-  @media (max-width: ${DESKTOP_VIEW_CUTOFF}){
+  @media (min-width: ${SHRINK_TEXT_CUTOFF}) and (max-width: ${DESKTOP_VIEW_CUTOFF}){
     font-style: italic;
     margin-bottom: 0;
     margin-top: 0;
     font-size: 14px;
+  }
+  @media (max-width: ${SHRINK_TEXT_CUTOFF}){
+    font-style: italic;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-size: 11px;
   }
 `
 
@@ -157,17 +166,21 @@ const DisplayBullets = ({ bullets }) => {
 const ResumeEntryListing = ({ resumeEntry }) => {
   return(
     <li>
-      {resumeEntry.title}
-      <ResumeEntryDate>
-        {(resumeEntry.startDate instanceof Date && resumeEntry.endDate instanceof Date) ?
-          `${resumeEntry.startDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.startDate.getFullYear()} 
+      <div style={{ position: "relative" }}>
+        {resumeEntry.title} <br></br>
+        {(typeof resumeEntry.subtitle !== "undefined" && resumeEntry.subtitle !== "") ?
+          <div> <i style={{ fontSize: `${SUBTITLE_PERCENT_SIZE}%` }}>{resumeEntry.subtitle}</i> </div>
+          :
+          null
+        }
+        <ResumeEntryDate>
+          {(resumeEntry.startDate instanceof Date && resumeEntry.endDate instanceof Date) ?
+            `${resumeEntry.startDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.startDate.getFullYear()} 
           to ${resumeEntry.endDate.toLocaleString("en-us", { month: "long" })} ${resumeEntry.endDate.getFullYear()}`
-          : null}
-      </ResumeEntryDate>
-      <div>
-        <i style={{ fontSize: `${SUBTITLE_PERCENT_SIZE}%` }}>{resumeEntry.subtitle}</i>
+            : null}
+        </ResumeEntryDate>
+        <DisplayBullets bullets={resumeEntry.bullets} />
       </div>
-      <DisplayBullets bullets={resumeEntry.bullets} />
     </li>
   )
 }
