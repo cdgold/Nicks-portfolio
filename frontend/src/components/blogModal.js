@@ -19,6 +19,7 @@ const ModalDiv = styled.div`
     color: ${props => props.theme.colors.baseBackground};
     box-shadow: 0 0 0 max(100vh, 100vw) rgba(0, 0, 0, .5);
     overflow: auto;
+    white-space: pre-wrap;
     @media (min-width: ${TEXT_SHRINK_CUTOFF}){
         font-size: 15px;
         width: 60vw;

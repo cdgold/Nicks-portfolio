@@ -172,7 +172,7 @@ const exampleResumeEntrys = [
     id: "apojsdf"
   },
 ]
-
+*/
 const exampleProjects = [{
   title: "Donn B. Murphy One Act Play",
   description: `A telling story of what it means to be human, how to survive in the wild,
@@ -182,22 +182,6 @@ const exampleProjects = [{
   writtenOnDate: new Date("08-01-2019"),
   id: "afsojpdml"
 },
-{ title: "Donn B. Murphy One Act Play",
-  description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
-    and director Billy Morrisette said he got the idea for the script while working at his local Dairy
-    Queen as a teenager. Back then, he told everybody who would listen that the play would be
-    hilarious if it “took place in a fast food restaurant and everyone in the restaurant [was] named
-    Mac” (Emory). The script, rather than being about an 11th century power struggle over the
-    monarchy of Scotland, would focus on a 1970s fast food worker killing the owner of the
-    restaurant so he could run it himself. The transformation is inherently funny, yet Morrisette does
-    not build this idea much beyond the premise. While Morrisette’s translation of Macbeth into a
-    modern rural American town is at times clever, it disappointingly never fully commits to digging
-    beyond the surface level of the play. This leaves the film as neither a compelling modern day
-    translation of the tragic source material nor as a meaningful satirical take.`,
-  fileURL: "https://drive.google.com/file/d/1oeOIKZ20WnfBogB3hofXROf33F_5_3Wi/preview",
-  fileType: "PDF",
-  writtenOnDate: new Date("08-01-2020"),
-  id: "askfdoplm" },
 { title: "Donn B. Murphy One Act Play",
   description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
     and director Billy Morrisette said he got the idea for the script while working at his local Dairy
@@ -228,7 +212,22 @@ const exampleProjects = [{
     translation of the tragic source material nor as a meaningful satirical take.`,
   fileType: "none",
   writtenOnDate: new Date("08-01-2018"),
-  id: "qweorjlm" }
+  id: "qweorjlm" },
+{ title: "Donn B. Murphy One Act Play",
+  description: `When interviewed about his parody film of Macbeth titled Scotland, PA (2001), writer
+    and director Billy Morrisette said he got the idea for the script while working at his local Dairy
+    Queen as a teenager. Back then, he told everybody who would listen that the play would be
+    hilarious if it “took place in a fast food restaurant and everyone in the restaurant [was] named
+    Mac” (Emory). The script, rather than being about an 11th century power struggle over the
+    monarchy of Scotland, would focus on a 1970s fast food worker killing the owner of the
+    restaurant so he could run it himself. The transformation is inherently funny, yet Morrisette does
+    not build this idea much beyond the premise. While Morrisette’s translation of Macbeth into a
+    modern rural American town is at times clever, it disappointingly never fully commits to digging
+    beyond the surface level of the play. This leaves the film as neither a compelling modern day
+    translation of the tragic source material nor as a meaningful satirical take.`,
+  fileType: "none",
+  writtenOnDate: new Date("08-01-2018"),
+  id: "qwaosdjifm" }
 ]
 
 const exampleBlogs = [
@@ -255,7 +254,6 @@ const exampleBlogs = [
     id: "09j32oe"
   }
 ]
-*/
 
 const RoutesDiv = styled.div`
   margin-top: 4rem;
@@ -284,7 +282,7 @@ const App = () => {
       .catch(error => {
         //console.error("Error fetching projects service: ", error)
         setProjects([])
-        //setProjects(exampleProjects)
+        setProjects(exampleProjects)
       })
     blogsService.getAll()
       .then(blogs => {

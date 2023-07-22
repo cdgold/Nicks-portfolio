@@ -1,7 +1,7 @@
 import React from "react"
 import nickGivingPresentation from "../assets/images/nick_giving_presentation.jpg"
 import nickBeekeeping from "../assets/images/nick_beekeeping_cropped.png"
-import nickSitting from "../assets/images/nick_sitting_cropped.jpg"
+import nickPerforming from "../assets/images/nick_performing.jpg"
 
 import styled from "styled-components"
 import animations from "../theme/animations"
@@ -251,12 +251,12 @@ const Home = () => {
         </CentralImageContainer>
         <BiggerImageContainer>
           <ImageLink to="/projects">
-            <BiggerFlankingImage src={nickBeekeeping} alt="Nick holding a frame of bees" />
+            <BiggerFlankingImage src={nickPerforming} alt="Nick performing in a play" />
           </ImageLink>
         </BiggerImageContainer>
         <SmallerImageContainer>
           <ImageLink to="/blogs">
-            <SmallerFlankingImage src={nickSitting} alt="Nick sitting on a couch" />
+            <SmallerFlankingImage src={nickBeekeeping} alt="Nick holding a frame of bees" />
           </ImageLink>
         </SmallerImageContainer>
       </ImagesDiv>
@@ -265,9 +265,9 @@ const Home = () => {
           {`Hey, I'm `}<b>{`Nick`}</b>{`.`}
         </HelloTextDiv>
         <ShortBioDiv>
-          {`Irure ullamco veniam esse excepteur. Amet Lorem veniam velit labore qui. Esse laboris aute enim laborum nisi.
-            Irure ullamco veniam esse excepteur. Amet Lorem veniam velit labore qui. Esse laboris aute enim laborum nisi.
-            Irure ullamco veniam esse excepteur. Amet Lorem veniam velit labore qui. Esse laboris aute enim laborum nisi.`}
+          {`I’m glad you found this website my friend Chris built.  I am a consultant and writer from Connecticut living in Washington D.C.  
+          My interests are behavioral economics, game theory, cooking, architecture, beekeeping, agriculture, homesteading, public transport, Super Smash Brothers Melee… 
+          If we’ve met, please reach out, I’m sure I wish we kept in touch.`}
         </ShortBioDiv>
       </IntroductionDiv>
     </HomeDiv>

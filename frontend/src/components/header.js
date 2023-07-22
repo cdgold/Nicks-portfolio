@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 // import cursive_name from "../assets/images/cursive_name.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faRectangleXmark } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faRectangleXmark, faStar } from "@fortawesome/free-solid-svg-icons"
 
 const DESKTOP_VIEW_CUTOFF = "500px"
 
@@ -55,6 +55,10 @@ const MenuLink = styled.div`
   font-family: 'Montserrat', sans-serif;
 `
 
+const MenuStar = styled.div`
+  color: yellow;
+`
+
 const SlidingMenu = ({ menuStyling, setMenuStyling, navigate }) => {
 
   const handleNavigate = (link) => {
@@ -79,11 +83,15 @@ const SlidingMenu = ({ menuStyling, setMenuStyling, navigate }) => {
       <MenuLink onClick={() => handleNavigate("/blogs")}>
         Blogs
       </MenuLink>
+      <MenuStar onClick={() => ("")}>
+        <FontAwesomeIcon icon={faStar} />
+      </MenuStar>
     </SlidingMenuDiv>
   )
 }
 
 const HeaderStyled = styled.div`
+  border-bottom: 1px solid white;
   position: fixed;
   display: flex;
   justify-content: right;
@@ -133,6 +141,11 @@ font-family: 'Montserrat', sans-serif;
   }
 `
 
+const Star = styled(StyledLink)`
+  color: yellow;
+  font-size: .75rem;
+`
+
 const NavButton = styled.div`
   @media (min-width: ${DESKTOP_VIEW_CUTOFF}) {
     display: none;
@@ -163,7 +176,10 @@ const Header = () => {
       <NameText onClick={() => navigate("/")} >NICK GIOTIS</NameText>
       <StyledLink to="/projects" >{"Projects"}</StyledLink>
       <StyledLink to="/resume">{"Resume"}</StyledLink>
-      <StyledLink to="/blogs" style={{ paddingRight: "2em" }}>{"Blogs"}</StyledLink>
+      <StyledLink to="/blogs" style={{ paddingRight: "1.25em" }}>{"Blogs"}</StyledLink>
+      <Star onClick={() => ("")}>
+        <FontAwesomeIcon icon={faStar} />
+      </Star>
     </HeaderStyled>
   )
 }

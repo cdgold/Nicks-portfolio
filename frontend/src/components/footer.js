@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLinkedin, faInstagram } from "@fortawesome/free-brands-svg-icons"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 
 const FooterDiv = styled.div`
   margin-left: 15px;
@@ -46,6 +47,23 @@ color: #921df2;
 }
 `
 
+const EmailLink = styled.button`
+all: unset;
+text-decoration: none;
+padding-left: 10px;
+color: ${props => props.theme.colors.primary};
+
+&:hover {
+  color: ${props => props.theme.colors.secondary};
+  transform: translateY(-1px);
+  cursor: pointer;
+}
+
+&:active {
+  color: ${props => props.theme.colors.tertiary};
+}
+`
+
 
 const Footer = () => {
   return(
@@ -54,6 +72,14 @@ const Footer = () => {
       <p style={{ display: "inline", fontSize: "14px", color:"#7c7e82", paddingLeft: "10px" }}> {`Connect with me here:`}</p>
       <LinkedInLink href="https://www.linkedin.com/in/nicholasgiotis/"><FontAwesomeIcon icon={faLinkedin}></FontAwesomeIcon></LinkedInLink>
       <InstagramLink href="https://www.instagram.com/nickgiotis/?hl=en"><FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon></InstagramLink>
+      <EmailLink onClick={() => {
+        try{
+          navigator.clipboard.writeText("nsgiotis@gmail.com")
+          window.alert("Copied e-mail (nsgiotis@gmail.com) to your clipboard.")
+        } catch(error) {
+          window.alert("Could not copy e-mail (nsgiotis@gmail.com) to your clipboard.")
+        }
+      }}><FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon></EmailLink>
     </FooterDiv>
   )
 }

@@ -39,7 +39,16 @@ const PDFDiv = styled(IFrameDiv)`
 const MostRecentProjectDiv = styled.div`
   display: grid;
   grid-template-columns: 80vw;
+  place-content: center;
+`
+
+const MostRecentProjectContainer = styled.div`
+background: ${props => props.theme.colors.primary};
+border-radius: 10px;
+  width: 100%;
+  display: grid;
   @media (min-width: 700px){
+    padding: 20px;
     grid-template-rows: fit-content(80vw) fit-content(80vw) fit-content(80vw) fit-content(80vw);
   }
   @media (max-width: 700px){
@@ -58,6 +67,7 @@ const MostRecentText = styled.div`
 `
 
 const ProjectTitle = styled(MostRecentText)`
+  color: white;
   font-size: 30px;
   font-weight: 600;
   letter-spacing: .1em;
@@ -106,17 +116,21 @@ const MostRecentProject = ({ project }) => {
   if(project !== null){
     return(
       <MostRecentProjectDiv>
-        <MostRecentText>{`MOST RECENT`}</MostRecentText>
-        <ProjectTitle>{`${project.title}`}</ProjectTitle>
-        {(typeof project.writtenOnDate !== "undefined" && project.writtenOnDate !== null)?
-          <MostRecentDate> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </MostRecentDate>
-          :null}
-        {(IFrameHeight !== null && IFrameWidth !== null)?
-          <IFrameDiv width={"90%"} height={IFrameHeight} >
-            <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay" ></iframe>
-          </IFrameDiv>
-          :null}
-        <MostRecentDescriptionText> {project.description} </MostRecentDescriptionText>
+        <MostRecentProjectContainer>
+          <span style={{ color: "white" }}>
+            <MostRecentText>{`MOST RECENT`}</MostRecentText>
+            <ProjectTitle>{`${project.title}`}</ProjectTitle>
+            {(typeof project.writtenOnDate !== "undefined" && project.writtenOnDate !== null)?
+              <MostRecentDate> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </MostRecentDate>
+              :null}
+          </span>
+          {(IFrameHeight !== null && IFrameWidth !== null)?
+            <IFrameDiv width={"90%"} height={IFrameHeight} >
+              <iframe src={project.fileURL} width={"100%"} height={"100%"} allow="autoplay" ></iframe>
+            </IFrameDiv>
+            :null}
+          <MostRecentDescriptionText> {project.description} </MostRecentDescriptionText>
+        </MostRecentProjectContainer>
       </MostRecentProjectDiv>)
   }
   return null
@@ -127,14 +141,19 @@ const ProjectsDiv = styled.div`
 `
 
 const ProjectDiv = styled.div`
-  margin-top: 4rem;
+  margin-top: 2rem;
   margin-left: 1rem;
+  background: ${props => props.theme.colors.primary};
+  border-radius: 10px;
   font-family: "Source Sans Pro", sans-serif;
+  height: min-content;
   @media (min-width: 1000px){
-    width: 30vw;
+    width: 40vw;
+    padding: 20px;
   }
   @media (min-width: 750px) and (max-width: 1000px){
     width: 45vw;
+    padding: 10px;
   }
   @media (max-width: 750px){
     width: 90vw;
@@ -150,10 +169,12 @@ const Project = ({ project }) => {
 
   return(
     <ProjectDiv>
-      <ProjectTitle> {project.title} </ProjectTitle>
-      {(typeof project.writtenOnDate !== "undefined")?
-        <h4> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </h4>
-        :null}
+      <ProjectTitle style={{ textAlign: "left" }}> {project.title} </ProjectTitle>
+      <span style={{ color: "white" }}>
+        {(typeof project.writtenOnDate !== "undefined")?
+          <h4> {`${project.writtenOnDate.toLocaleString("en-us", { month: "long" })} ${project.writtenOnDate.getFullYear()}`} </h4>
+          :null}
+      </span>
       <p> {project.description} </p>
       {(IFrameWidth !== null && IFrameHeight !== null) ?
         <IFrameDiv style={{ width: "100%", height: IFrameHeight }}>
@@ -165,17 +186,19 @@ const Project = ({ project }) => {
 }
 
 const PreviousProjectsText = styled(MostRecentText)`
+  margin-top: 3rem;
   letter-spacing: .2em;
   text-align: left;
   margin-left: 1rem;
+
 `
 
 const PreviousProjectsDiv = styled.div`
   display: flex;
-  column-gap: 10px;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
 const Projects = ({ projects }) => {
