@@ -24,6 +24,7 @@ const postBlog = async (newBlog) => {
   const config = {
     headers: { Authorization: token },
   }
+  //console.log("posting with: ", newBlog)
   const response = await axios.post(baseUrl, newBlog, config)
   return response.data
 }
@@ -38,6 +39,7 @@ const putBlog = async (newBlog) => {
     writtenOnDate: newBlog.writtenOnDate
   }
   const putBlogURL = baseUrl + "/" + newBlog.id
+  //console.log("putting with: ", blogToPut)
   const response = await axios.put(putBlogURL, blogToPut, config)
   return response.data
 }

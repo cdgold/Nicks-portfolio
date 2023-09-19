@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faRectangleXmark, faStar } from "@fortawesome/free-solid-svg-icons"
 
 const DESKTOP_VIEW_CUTOFF = "500px"
+const STAR_LINK = "https://forms.gle/FWZqiLEBk7aDKoZg9"
 
 const openMenuStyles = {
   transform: "translate3d(20vw, 0, 0)",
@@ -83,7 +84,7 @@ const SlidingMenu = ({ menuStyling, setMenuStyling, navigate }) => {
       <MenuLink onClick={() => handleNavigate("/blogs")}>
         Blogs
       </MenuLink>
-      <MenuStar onClick={() => ("")}>
+      <MenuStar onClick={() => window.open(STAR_LINK)}>
         <FontAwesomeIcon icon={faStar} />
       </MenuStar>
     </SlidingMenuDiv>
@@ -177,7 +178,7 @@ const Header = () => {
       <StyledLink to="/projects" >{"Projects"}</StyledLink>
       <StyledLink to="/resume">{"Resume"}</StyledLink>
       <StyledLink to="/blogs" style={{ paddingRight: "1.25em" }}>{"Blogs"}</StyledLink>
-      <Star onClick={() => ("")}>
+      <Star onClick={() => (window.open(STAR_LINK))}>
         <FontAwesomeIcon icon={faStar} />
       </Star>
     </HeaderStyled>

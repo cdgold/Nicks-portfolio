@@ -237,6 +237,10 @@ font-weight: 400;
   color: black;
 `
 
+const BioLink = styled.a`
+  color: ${props => props.theme.colors.tertiary};
+`
+
 const Home = () => {
   return(
     <HomeDiv>
@@ -265,29 +269,15 @@ const Home = () => {
           {`Hey, I'm `}<b>{`Nick`}</b>{`.`}
         </HelloTextDiv>
         <ShortBioDiv>
-          {`I’m glad you found this website my friend Chris built.  I am a consultant and writer from Connecticut living in Washington D.C.  
-          My interests are behavioral economics, game theory, cooking, architecture, beekeeping, agriculture, homesteading, public transport, Super Smash Brothers Melee… 
+          {`I’m glad you found this website my friend`}&nbsp;<BioLink href={"https://www.chrisgold.bio"}>Chris</BioLink>&nbsp;{`built.  
+          I am a consultant and writer from Connecticut living in Washington D.C.  
+          My interests are behavioral economics, game theory, cooking, architecture, beekeeping, agriculture, homesteading, public 
+          transport, Super Smash Brothers Melee… 
           If we’ve met, please reach out, I’m sure I wish we kept in touch.`}
         </ShortBioDiv>
       </IntroductionDiv>
     </HomeDiv>
   )
-/*
-  return(
-    <MobileHomeDiv>
-      <IntroductionDiv>
-        <HelloTextDiv>
-          <p>{`Hey, I'm `}<b>{`Nick`}</b>{`.`}</p>
-        </HelloTextDiv>
-        <ShortBioDiv>
-          <p>{`Irure ullamco veniam esse excepteur. Amet Lorem veniam velit labore qui. Esse laboris aute enim laborum nisi.
-        Irure ullamco veniam esse excepteur. Amet Lorem veniam velit labore qui. Esse laboris aute enim laborum nisi.
-        Irure ullamco veniam esse excepteur. Amet Lorem veniam velit labore qui. Esse laboris aute enim laborum nisi.`}</p>
-        </ShortBioDiv>
-      </IntroductionDiv>
-    </MobileHomeDiv>
-  )
-  */
 }
 
 export default Home

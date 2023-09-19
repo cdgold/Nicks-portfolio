@@ -130,7 +130,6 @@ const CalendarDay = ({ dayNumber, month, isCurrentMonth, blog, handleDayClick })
 
 
   let displayTitle = blog.title
-  console.log(displayTitle.length)
   if (displayTitle.length > MAX_TITLE_LENGTH){
     displayTitle = displayTitle.slice(0, (MAX_TITLE_LENGTH - 3)) + "..."
   }
@@ -156,7 +155,7 @@ const Blogs = ({ blogs }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [viewedBlog, setViewedBlog] = useState(null)
 
-  const refreshViewDates = () => {
+  useEffect(() => {
     const newViewedDates = []
     const firstOfMonth = new Date(firstDateOfViewedMonth.getFullYear(), firstDateOfViewedMonth.getMonth(), 1)
     const lastOfMonth = new Date(firstDateOfViewedMonth.getFullYear(), firstDateOfViewedMonth.getMonth() + 1, 0)
@@ -183,20 +182,17 @@ const Blogs = ({ blogs }) => {
     setViewedDates(newViewedDates)
     const blogsInThisMonth = blogs.filter(blog => (blog.writtenOnDate.getMonth() === firstDateOfViewedMonth.getMonth()
       && blog.writtenOnDate.getFullYear() === firstDateOfViewedMonth.getFullYear()))
-    console.log(blogsInThisMonth)
     setBlogsInThisMonth(blogsInThisMonth)
-  }
+  }, [firstDateOfViewedMonth])
 
   const incrementMonth = () => {
     const incrementedMonthDate = new Date(firstDateOfViewedMonth.setMonth(firstDateOfViewedMonth.getMonth()+1))
     setFirstDateOfViewedMonth(incrementedMonthDate)
-    refreshViewDates()
   }
 
   const decrementMonth = () => {
     const decrementedMonthDate = new Date(firstDateOfViewedMonth.setMonth(firstDateOfViewedMonth.getMonth()-1))
     setFirstDateOfViewedMonth(decrementedMonthDate)
-    refreshViewDates()
   }
 
   const handleDayClick = ({ blog }) => {
@@ -209,14 +205,45 @@ const Blogs = ({ blogs }) => {
     const currentDate = new Date()
     const firstOfCurrentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
     setFirstDateOfViewedMonth(firstOfCurrentMonth)
-    refreshViewDates()
   }, [blogs])
+
+  console.log("Blogs is: ", blogs)
 
   return(
     <BlogsDiv>
       <BlogModal blog={viewedBlog} isOpen={modalIsOpen} setIsOpen={setModalIsOpen} />
       <CalendarContainer>
-        <MonthYearText> {firstDateOfViewedMonth.toLocaleString("default", { month: "long" })} {firstDateOfViewedMonth.getFullYear()}</MonthYearText>
+        <MonthYearText>
+          <select value={firstDateOfViewedMonth.getMonth()}
+            onChange={e => {
+              let dateToChange = new Date(firstDateOfViewedMonth)
+              dateToChange.setMonth(e.target.value)
+              setFirstDateOfViewedMonth(dateToChange)
+            }}>
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+          </select>
+          <select value={firstDateOfViewedMonth.getFullYear()}
+            onChange={e => {
+              let dateToChange = new Date(firstDateOfViewedMonth)
+              dateToChange.setYear(e.target.value)
+              setFirstDateOfViewedMonth(dateToChange)
+            }}>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+          </select>
+        </MonthYearText>
         {daysOfWeek.map(day => <CalendarDayHeader key={day}>{day}</CalendarDayHeader>)}
         {viewedDates.map((date, itr) => {
           let isCurrentMonth = true
@@ -230,13 +257,11 @@ const Blogs = ({ blogs }) => {
               if(isCurrentMonth === true){
                 if(blog.writtenOnDate.getMonth() === firstDateOfViewedMonth.getMonth()){
                   matchedBlog = blog
-                  console.log("match!")
                 }
               }
               else{
                 if(blog.writtenOnDate.getMonth() === firstDateOfViewedMonth.getMonth() - 1 || (blog.writtenOnDate.getMonth() === firstDateOfViewedMonth.getMonth() + 1)){
                   matchedBlog = blog
-                  console.log("match!")
                 }
               }
             }

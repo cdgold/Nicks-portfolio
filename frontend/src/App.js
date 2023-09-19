@@ -282,7 +282,7 @@ const App = () => {
       .catch(error => {
         //console.error("Error fetching projects service: ", error)
         setProjects([])
-        setProjects(exampleProjects)
+        //setProjects(exampleProjects)
       })
     blogsService.getAll()
       .then(blogs => {
@@ -294,7 +294,6 @@ const App = () => {
       })
 
     //setResumeEntrys(exampleResumeEntrys)
-    //setBlogs(exampleBlogs)
 
   }, [])
 

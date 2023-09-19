@@ -27,7 +27,7 @@ const BlogForm = ({ blog=null, submitFunction }) => {
     if(blog !== null){
       setTitle(blog.title)
       setBody(blog.body)
-      setWrittenOnDate(blog.writtenOnDate)
+      setWrittenOnDate(blog.writtenOnDate.toString())
     }
   }, [blog])
 
@@ -38,13 +38,20 @@ const BlogForm = ({ blog=null, submitFunction }) => {
       setMessage("Blogs require a title.")
       return
     }
-    const rightNow = new Date()
+    let submitDate
+    if (blog === null || typeof blog === "undefined" || typeof blog.writtenOnDate === "undefined" || blog.writtenOnDateDate === ""){
+      submitDate = new Date()
+      submitDate = submitDate.toString()
+    }
+    else {
+      submitDate = writtenOnDate
+    }
     let newBlog = {
       title: title,
       body: body,
-      writtenOnDate: rightNow.toString()
+      writtenOnDate: submitDate
     }
-    //console.log("Sending blog: ", newBlog, " off to blogService")
+    console.log("Sending blog: ", newBlog, " off to blogService")
     submitFunction(newBlog)
       .then(submitResponse => {
         setMessageColor("green")
