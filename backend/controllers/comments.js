@@ -21,14 +21,40 @@ commentsRouter.post("/:blogId", async (request, response, next) => {
         error: "bad id"
       })
     }
-    console.log("Found old blog, it's: ", oldBlog)
     const newComment = {"posterName": body.posterName, "content": body.content } 
     oldBlog.comments.push(newComment)
-    console.log("New blog is: ", oldBlog)
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.blogId, oldBlog, { new: true })
     response.json(updatedBlog)
   }
   catch (error) {
+    next(error)
+  }
+})
+
+commentsRouter.delete("/:blogId", async (request, response, next) => {
+  try {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if(!decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" })
+    }
+    const body = request.body
+    if(!("commentId" in body)) {
+      return response.status(400).json({ error: "need commentId in body of request" })
+    }
+    const foundBlog = await Blog.findById(request.params.blogId)
+    if (foundBlog == null){
+      return response.status(400).json({
+        error: "bad blog id"
+      })
+    }
+
+    // go thru comments of foundBlog
+    // find comment id
+    // delete
+
+    return response.status(204).end()
+  }
+  catch(error) {
     next(error)
   }
 })
