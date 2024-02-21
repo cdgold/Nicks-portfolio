@@ -269,7 +269,7 @@ const Home = () => {
           {`Hey, I'm `}<b>{`Nick`}</b>{`.`}
         </HelloTextDiv>
         <ShortBioDiv>
-          {`I’m glad you found this website my friend`}&nbsp;<BioLink href={"https://www.chrisgold.bio"}>Chris</BioLink>&nbsp;{`built.  
+          {`I’m glad you found this website my friend`}&nbsp;<BioLink href={"https://www.christopher.gold"}>Chris</BioLink>&nbsp;{`built.  
           I am a consultant and writer from Connecticut living in Washington D.C.  
           My interests are behavioral economics, game theory, cooking, architecture, beekeeping, agriculture, homesteading, public 
           transport, Super Smash Brothers Melee… 
